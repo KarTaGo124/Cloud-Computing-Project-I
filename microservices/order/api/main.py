@@ -8,7 +8,6 @@ from sqlalchemy.orm import Session
 app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
-
 class OrderBase(BaseModel):
     id: int
     customer_id: int
@@ -26,7 +25,7 @@ def get_db():
 db_dependency = Annotated[Session, Depends(get_db)]
 
 @app.post("/orders/")
-async def create_order(order: OrderBase, db:  db_dependency):
+async def create_order(order: OrderBase, db: db_dependency):
     db_order = models.Order(id=order.id, customer_id=order.customer_id, status=order.status, order_date=order.order_date)
     db.add(db_order)
     db.commit() 
@@ -36,7 +35,7 @@ async def create_order(order: OrderBase, db:  db_dependency):
         db.add(db_product_order)
     db.commit()
 
-# @app.get("/")
+
 # async  def read_root():
 #     return {"Hello": "World"}
 
