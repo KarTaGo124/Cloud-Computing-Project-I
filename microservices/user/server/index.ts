@@ -1,10 +1,12 @@
 import express from 'express';
-import userRouter from './User/UserRouter';          
+import userRouter from './User/UserRouter';       
+import userProfiieRouter from './UserProfile/UserProfileRouter';
 
 const app = express();
 app.use(express.json());  
 
 app.use('/users', userRouter);
+app.use('/profile', userProfiieRouter)
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {

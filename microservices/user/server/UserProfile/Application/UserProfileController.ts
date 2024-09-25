@@ -1,60 +1,79 @@
 import { Request, Response } from 'express';
 import UserProfileService from '../Domain/UserProfileService';
 
-const getUserProfile = async (req: Request, res: Response) => {
+const getProfileById = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const user = await UserProfileService.getUserById(id);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+    try {
+        const userProfile = await UserProfileService.getProfileById(id);
+        res.status(200).json(userProfile);
+    } catch (error) {
+        res.status(404).json({ message: (error as Error).message });
     }
-    return res.status(200).json(user);
 }
 
-const getUserAddress = async (req: Request, res: Response) => {
-   const {id} = req.params;
-   const address = await UserProfileService.getUserAddressById(id);
-    if (!address) {
-         return res.status(404).json({ message: 'Address not found' });
-    }
-    return res.status(200).json(address);
-}
-
-const updateName = async (req: Request, res: Response) => {
+const getUserAddressById = async (req: Request, res: Response) => {
     const { id } = req.params;
-    const { name } = req.body;
-    const { lastname } = req.body;
-    const user = await UserProfileService.updateUserName(id, name, lastname);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+    try {
+        const address = await UserProfileService.getUserAddressById(id);
+        res.status(200).json(address);
+    } catch (error) {
+        res.status(404).json({ message: (error as Error).message });
     }
-    return res.status(200).json(user);
 }
 
-const updateAddress = async (req: Request, res: Response) => {
+const updateUserName = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { name, lastname } = req.body;
+    try {
+        await UserProfileService.updateUserName(id, name, lastname);
+        res.status(204).json({ message: "User name updated" });
+    } catch (error) {
+        res.status(400).json({ message: (error as Error).message });
+    }
+}
+
+const updateUserAddress = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { address } = req.body;
-    const user = await UserProfileService.updateUserAddress(id, address);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+    try {
+        await UserProfileService.updateUserAddress(id, address);
+        res.status(204).json({ message: "User address updated" });
+    } catch (error) {
+        res.status(400).json({ message: (error as Error).message });
     }
-    return res.status(200).json(user);
 }
 
-const updatePhone = async (req: Request, res: Response) => {
+const updateUserPhone = async (req: Request, res: Response) => {
     const { id } = req.params;
     const { phone } = req.body;
-    const user = await UserProfileService.updateUserPhone(id, phone);
-    if (!user) {
-        return res.status(404).json({ message: 'User not found' });
+    try {
+        await UserProfileService.updateUserPhone(id, phone);
+        res.status(204).json({ message: "User phone updated" });
+    } catch (error) {
+        res.status(400).json({ message: (error as Error).message });
     }
-    return res.status(200).json(user);
 }
+
+const updateAllUserProfile = async (req: Request, res: Response) => {
+    const { id } = req.params;
+    const { first_name, last_name, phone_number, address, bio, date_of_birth } = req.body;
+
+    try {
+        await UserProfileService.updateAllUserProfile(id, first_name, last_name, phone_number, address, bio, date_of_birth);
+        res.status(204).json({ message: "User profile updated" });
+    } catch (error) {
+        res.status(400).json({ message: (error as Error).message });
+    }
+}
+
 
 
 export default {
-    getUserProfile,
-    getUserAddress,
-    updateName,
-    updateAddress,
-    updatePhone
+    getProfileById,
+    getUserAddressById,
+    updateUserName,
+    updateUserAddress,
+    updateUserPhone,
+    updateAllUserProfile
+
 }
