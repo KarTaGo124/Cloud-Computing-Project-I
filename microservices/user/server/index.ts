@@ -1,22 +1,18 @@
-import 'dotenv/config';
 import express from 'express';
-import { sequelize, createDatabase } from './config/db';
-import User from './models/User';
-import UserProfile from './models/Profile';
+import sequelize from './config/db';
+import User from './User/Domain/User'; 
+import UserProfile from './UserProfile/Domain/UserProfile'; 
 
 const app = express();
 app.use(express.json());
 
 const startServer = async () => {
   try {
-    await createDatabase();
-
     await sequelize.authenticate();
-    await sequelize.sync({ alter: true });
-    console.log('Base de datos sincronizada');
+    console.log('Conexión a la base de datos MySQL exitosa');
 
-    app.listen(3000, () => {
-      console.log('Server is running on http://localhost:3000');
+    app.listen(8080, () => {
+      console.log('Servidor corriendo en http://localhost:8080');
     });
   } catch (error) {
     console.error('Error al iniciar el servidor:', error);
