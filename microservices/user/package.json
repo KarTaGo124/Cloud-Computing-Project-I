@@ -12,9 +12,12 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "class-validator": "^0.14.1",
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
+    "mysql": "^2.18.1",
     "mysql2": "^3.11.3",
+    "reflect-metadata": "^0.2.2",
     "sequelize": "^6.37.3",
     "typescript": "^5.6.2",
     "user": "file:"
