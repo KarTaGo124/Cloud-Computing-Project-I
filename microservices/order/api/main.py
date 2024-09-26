@@ -1,3 +1,4 @@
+from http.client import HTTPException
 from fastapi import FastAPI, Depends
 from pydantic import BaseModel
 from typing import List, Annotated,Tuple
@@ -9,7 +10,6 @@ app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
 class OrderBase(BaseModel):
-    id: int
     customer_id: int
     products: List[Tuple[int,int]]
     status: int
@@ -35,12 +35,19 @@ async def create_order(order: OrderBase, db: db_dependency):
         db.add(db_product_order)
     db.commit()
 
+@app.get("/orders/{order_id}")
+async def get_orders(order_id: int, db: db_dependency):
+    result = db.query(models.Order).filter(models.Order.id == order_id).first()
+    if not result:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return result
 
-# async  def read_root():
-#     return {"Hello": "World"}
-
-# @app.get("/orders/{customer_id}")
-
+@app.get("/orders/{customer_id}")
+async def get_orders(customer_id: int, db: db_dependency):
+    result = db.query(models.Order).filter(models.Order.customer_id == customer_id).all()
+    if not result:
+        raise HTTPException(status_code=404, detail="Order not found")
+    return result
 
 # @app.post("/orders/")
 
