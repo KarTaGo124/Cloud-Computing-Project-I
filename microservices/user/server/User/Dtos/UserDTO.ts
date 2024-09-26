@@ -1,9 +1,8 @@
-interface User {
+interface UserDTO {
   id: number;
   username: string;
   email: string;
-  password: string;
   created_at: Date;
 }
 
-export default User;
+export default UserDTO;
