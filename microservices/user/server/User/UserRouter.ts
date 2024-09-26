@@ -9,4 +9,4 @@ userRouter.post("/register", userController.register);
 userRouter.patch("/:id", userController.updateUsername);
 userRouter.delete("/:id", userController.deleteUser);
 
-export default userRouter;
+export default userRouter; 

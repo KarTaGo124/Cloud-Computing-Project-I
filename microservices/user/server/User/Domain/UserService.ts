@@ -1,12 +1,19 @@
 import userRepository from "../Infrastructure/UserRepository";
 import LoginResDto from "../Dtos/LoginResponseDTO";
 
+
 const createUser = async (
   username: string,
   email: string,
   password: string
 ) => {
-  return await userRepository.createUser(username, email, password);
+ const user = await userRepository.findByEmail(email);
+  if (user) {
+    throw new Error("Email already exists"); 
+  }
+  const createdUser = await userRepository.createUser(username, email, password);
+
+  return createdUser;
 };
 
 const login = async (email: string, password: string) => {
@@ -35,7 +42,9 @@ const updateUsername = async (id: string, username: string) => {
 };
 
 const deleteUser = async (id: string) => {
-  return await userRepository.deleteUser(id);
+  console.log("deleteUser", id);
+  const user = await userRepository.deleteUser(id);
+  console.log("deleteUser", user);
 };
 
 export default {

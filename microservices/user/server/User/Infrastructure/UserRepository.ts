@@ -6,17 +6,26 @@ const createUser = async (
   username: string,
   email: string,
   password: string
-) => {
+): Promise<UserDTO> => {
   const [result] = await pool.query(
-    "INSERT INTO users (username, email, password) VALUES (?, ?, ?)",
+    "INSERT INTO user (username, email, password) VALUES (?, ?, ?)",
     [username, email, password]
   );
-  return result;
+
+  const insertId = (result as any).insertId;
+
+  const [rows] = await pool.query(
+    "SELECT id, email, username, created_at FROM user WHERE id = ?",
+    [insertId]
+  );
+
+  const users = rows as UserDTO[];
+  return users[0];
 };
 
 const findByEmail = async (email: string): Promise<LoginResDto | null> => {
   const [rows] = await pool.query(
-    "SELECT email, password FROM users WHERE email = ?",
+    "SELECT email, password FROM user WHERE email = ?",
     [email]
   );
   const users = rows as LoginResDto[];
@@ -25,24 +34,19 @@ const findByEmail = async (email: string): Promise<LoginResDto | null> => {
 
 const findById = async (id: string): Promise<UserDTO | null> => {
   const [rows] = await pool.query(
-    "SELECT email, username, created_at FROM users WHERE id = ?",
+    "SELECT email, username, created_at FROM user WHERE id = ?",
     [id]
   );
   const users = rows as UserDTO[];
   return users.length ? users[0] : null;
 };
 
-const updateUsername = async (id: string, username: string) => {
-  const [result] = await pool.query(
-    "UPDATE users SET username = ? WHERE id = ?",
-    [username, id]
-  );
-  return result;
+const updateUsername = async (id: string, username: string): Promise<void> => {
+  await pool.query("UPDATE user SET username = ? WHERE id = ?", [username, id]);
 };
 
-const deleteUser = async (id: string) => {
-  const [result] = await pool.query("DELETE FROM users WHERE id = ?", [id]);
-  return result;
+const deleteUser = async (id: string): Promise<void> => {
+  await pool.query("DELETE FROM user WHERE id = ?", [id]);
 };
 
 export default {
