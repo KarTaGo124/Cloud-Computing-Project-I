@@ -17,4 +17,3 @@ class OrderProduct(Base):
     order_id = Column(Integer, ForeignKey("orders.id"))
     product_id = Column(Integer)  # ForeignKey("products.id")
     quantity = Column(Integer)
-    creation_date = Column(DateTime, default=func.now())  # Automatically set to current timestamp

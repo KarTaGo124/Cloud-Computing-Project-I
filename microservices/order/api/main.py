@@ -17,7 +17,6 @@ class OrderProductBase(BaseModel):
 class OrderBase(BaseModel):
     customer_id: int
     products: List[OrderProductBase]
-    status: int = 0
     order_date: datetime
 
 class OrderUpdate(BaseModel):
@@ -36,7 +35,6 @@ db_dependency = Annotated[Session, Depends(get_db)]
 async def create_order(order: OrderBase, db: db_dependency):
     db_order = models.Order(
         customer_id=order.customer_id,
-        status=order.status,
         order_date=order.order_date
     )
     db.add(db_order)
