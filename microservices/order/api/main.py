@@ -51,7 +51,6 @@ async def create_order(order: OrderBase, db: db_dependency):
         )
         db.add(db_product_order)
     db.commit()
-    
     return {"message": "Order created successfully", "order_id": db_order.id}
 
 @app.get("/orders/{order_id}")
@@ -83,10 +82,13 @@ async def delete_order(order_id: int, db: db_dependency):
     db_order = db.query(models.Order).filter(models.Order.id == order_id).first()
     if not db_order:
         raise HTTPException(status_code=404, detail="Order not found")
+
+    db.query(models.OrderProduct).filter(models.OrderProduct.order_id == order_id).delete()
     
     db.delete(db_order)
     db.commit()
-    return {"message": "Order deleted successfully"}
+    return {"message": "Order and associated products deleted successfully"}
+
 
 @app.get("/orders/{order_id}/status")
 async def get_order_status(order_id: int, db: db_dependency):
