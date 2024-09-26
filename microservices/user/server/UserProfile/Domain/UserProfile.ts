@@ -11,5 +11,3 @@ interface UserProfile {
 }
 
 export default UserProfile;
-
-

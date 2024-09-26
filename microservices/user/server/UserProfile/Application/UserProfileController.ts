@@ -1,5 +1,5 @@
-import { Request, Response } from 'express';
-import UserProfileService from '../Domain/UserProfileService';
+import { Request, Response } from "express";
+import UserProfileService from "../Domain/UserProfileService";
 
 /**
  * @swagger
@@ -7,7 +7,6 @@ import UserProfileService from '../Domain/UserProfileService';
  *   name: UserProfile
  *   description: UserProfile management
  */
-
 
 /**
  * @swagger
@@ -29,19 +28,14 @@ import UserProfileService from '../Domain/UserProfileService';
  *         description: User profile not found
  */
 const getProfileById = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-        const userProfile = await UserProfileService.getProfileById(id);
-        res.status(200).json(userProfile);
-    } catch (error) {
-        res.status(404).json({ message: (error as Error).message });
-    }
-}
-
-
-
-
-
+  const { id } = req.params;
+  try {
+    const userProfile = await UserProfileService.getProfileById(id);
+    res.status(200).json(userProfile);
+  } catch (error) {
+    res.status(404).json({ message: (error as Error).message });
+  }
+};
 
 /**
  * @swagger
@@ -63,15 +57,14 @@ const getProfileById = async (req: Request, res: Response) => {
  *         description: User address not found
  */
 const getUserAddressById = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    try {
-        const address = await UserProfileService.getUserAddressById(id);
-        res.status(200).json(address);
-    } catch (error) {
-        res.status(404).json({ message: (error as Error).message });
-    }
-}
-
+  const { id } = req.params;
+  try {
+    const address = await UserProfileService.getUserAddressById(id);
+    res.status(200).json(address);
+  } catch (error) {
+    res.status(404).json({ message: (error as Error).message });
+  }
+};
 
 /**
  * @swagger
@@ -104,15 +97,15 @@ const getUserAddressById = async (req: Request, res: Response) => {
  *         description: Error updating user name
  */
 const updateName = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { name, lastname } = req.body;
-    try {
-        await UserProfileService.updateUserName(id, name, lastname);
-        res.status(204).json({ message: "User name updated" });
-    } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
-    }
-}
+  const { id } = req.params;
+  const { name, lastname } = req.body;
+  try {
+    await UserProfileService.updateUserName(id, name, lastname);
+    res.status(204).json({ message: "User name updated" });
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
+};
 
 /**
  * @swagger
@@ -143,17 +136,16 @@ const updateName = async (req: Request, res: Response) => {
  *         description: Error updating user address
  */
 const updateUserAddress = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { address } = req.body;
-    try {
-        await UserProfileService.updateUserAddress(id, address);
-        console.log("User address updated");
-        res.status(204).json({ message: "User address updated" });
-    } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
-    }
-}
+  const { id } = req.params;
+  const { address } = req.body;
+  try {
+    await UserProfileService.updateUserAddress(id, address);
 
+    res.status(204).json({ message: "User address updated" });
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
+};
 
 /**
  * @swagger
@@ -184,15 +176,15 @@ const updateUserAddress = async (req: Request, res: Response) => {
  *         description: Error updating user phone
  */
 const updateUserPhone = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { phone } = req.body;
-    try {
-        await UserProfileService.updateUserPhone(id, phone);
-        res.status(204).json({ message: "User phone updated" });
-    } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
-    }
-}
+  const { id } = req.params;
+  const { phone } = req.body;
+  try {
+    await UserProfileService.updateUserPhone(id, phone);
+    res.status(204).json({ message: "User phone updated" });
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
+};
 
 /**
  * @swagger
@@ -233,25 +225,39 @@ const updateUserPhone = async (req: Request, res: Response) => {
  *         description: Error updating user profile
  */
 const updateAllUserProfile = async (req: Request, res: Response) => {
-    const { id } = req.params;
-    const { first_name, last_name, phone_number, address, bio, date_of_birth } = req.body;
+  const { id } = req.params;
+  const {
+    first_name,
+    last_name,
+    phone_number,
+    address,
+    bio,
+    date_of_birth,
+    country,
+  } = req.body;
 
-    try {
-        await UserProfileService.updateAllUserProfile(id, first_name, last_name, phone_number, address, bio, date_of_birth);
-        res.status(204).json({ message: "User profile updated" });
-    } catch (error) {
-        res.status(400).json({ message: (error as Error).message });
-    }
-}
-
-
+  try {
+    await UserProfileService.updateAllUserProfile(
+      id,
+      first_name,
+      last_name,
+      phone_number,
+      address,
+      bio,
+      date_of_birth,
+      country
+    );
+    res.status(204).json({ message: "User profile updated" });
+  } catch (error) {
+    res.status(400).json({ message: (error as Error).message });
+  }
+};
 
 export default {
-    getProfileById,
-    getUserAddressById,
-    updateName,
-    updateUserAddress,
-    updateUserPhone,
-    updateAllUserProfile
-
-}
+  getProfileById,
+  getUserAddressById,
+  updateName,
+  updateUserAddress,
+  updateUserPhone,
+  updateAllUserProfile,
+};

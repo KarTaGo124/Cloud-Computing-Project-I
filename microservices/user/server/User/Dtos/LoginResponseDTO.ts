@@ -4,4 +4,3 @@ interface LoginResDto {
 }
 
 export default LoginResDto;
- 
