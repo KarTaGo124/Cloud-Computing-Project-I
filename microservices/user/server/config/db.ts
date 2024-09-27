@@ -10,4 +10,6 @@ const pool = mysql.createPool({
   database: process.env.DB_NAME || 'userdb',
 });
 
+console.log('DB connected');
+
 export default pool;
