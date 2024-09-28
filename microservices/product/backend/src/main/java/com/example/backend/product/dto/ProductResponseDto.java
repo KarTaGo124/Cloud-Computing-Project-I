@@ -1,5 +1,7 @@
 package com.example.backend.product.dto;
 
+import com.example.backend.category.domain.Category;
+import com.example.backend.category.dto.CategoryResponseDto;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,5 +12,6 @@ public class ProductResponseDto {
     private String name;
     private String description;
     private Double price;
-    private String categoryId;
+    private Long stock;
+    private CategoryResponseDto category;
 }

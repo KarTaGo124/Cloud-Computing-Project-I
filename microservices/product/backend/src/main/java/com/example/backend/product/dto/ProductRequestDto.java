@@ -9,5 +9,6 @@ public class ProductRequestDto {
     private String name;
     private String description;
     private Double price;
-    private String categoryId;  // Cambia de Category a solo un id
+    private Long stock;
+    private String categoryId;
 }

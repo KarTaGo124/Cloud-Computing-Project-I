@@ -24,6 +24,7 @@ public class CategoryService {
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
         categoryResponseDto.setId(category.getId().toHexString());
         categoryResponseDto.setName(category.getName());
+        categoryResponseDto.setDescription(category.getDescription());
         return categoryResponseDto;
     }
 
@@ -33,6 +34,21 @@ public class CategoryService {
             return mapToResponseDto(category);
         } catch (Exception e) {
             throw new CategoryCreationException("Error al crear la categoría");
+        }
+    }
+
+    public CategoryResponseDto update(ObjectId id, Category category) {
+        Category existingCategory = categoryRepository.findById(id)
+                .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada con id: " + id.toHexString()));
+        if (category.getName() != null)
+            existingCategory.setName(category.getName());
+        if (category.getDescription() != null)
+            existingCategory.setDescription(category.getDescription());
+        try {
+            categoryRepository.save(existingCategory);
+            return mapToResponseDto(existingCategory);
+        } catch (Exception e) {
+            throw new CategoryCreationException("Error al actualizar la categoría");
         }
     }
 

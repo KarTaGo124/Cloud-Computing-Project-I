@@ -14,4 +14,6 @@ public class Category {
     private ObjectId id;
 
     private String name;
+
+    private String description;
 }

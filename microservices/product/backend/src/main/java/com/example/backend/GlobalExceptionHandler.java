@@ -22,7 +22,7 @@ public class GlobalExceptionHandler {
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({IllegalArgumentException.class, CategoryCreationException.class, ProductCreationException.class})
-    public String handleIllegalArgumentException(IllegalArgumentException e) {
+    public String handleIllegalArgumentException(Exception e) {
         return e.getMessage();
     }
 

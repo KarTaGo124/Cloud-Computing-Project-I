@@ -21,7 +21,7 @@ public class Product {
 
     private Double price;
 
-    @DBRef
-    private Category category;
+    private Long stock;
 
+    private ObjectId categoryId;
 }
