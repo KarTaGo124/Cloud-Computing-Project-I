@@ -11,7 +11,7 @@ app = FastAPI()
 models.Base.metadata.create_all(bind=engine)
 
 class OrderProductBase(BaseModel):
-    product_id: int
+    product_id: str
     quantity: int
 
 class OrderBase(BaseModel):

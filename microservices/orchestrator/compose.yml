@@ -1,0 +1,5 @@
+services:
+  orders:
+    image:
+    ports:
+      - 8000:8000

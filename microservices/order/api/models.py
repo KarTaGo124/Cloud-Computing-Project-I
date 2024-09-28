@@ -15,6 +15,6 @@ class OrderProduct(Base):
     __tablename__ = "order_products"
     id = Column(Integer,primary_key=True, index=True)  # Auto-increment ID starting from 1
     order_id = Column(Integer, ForeignKey("orders.id"))
-    product_id = Column(Integer)  # ForeignKey("products.id")
+    product_id = Column(String)  # ForeignKey("products.id")
     quantity = Column(Integer)
     
