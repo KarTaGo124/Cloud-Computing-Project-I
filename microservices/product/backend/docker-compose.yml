@@ -9,6 +9,8 @@ services:
       MONGO_INITDB_DATABASE: database
     networks:
       - backend-network
+    volumes:
+      - mongo-data:/data/db
 
   backend:
     image: kartago124/product-backend
@@ -25,3 +27,6 @@ services:
 networks:
   backend-network:
     driver: bridge
+
+volumes:
+  mongo-data:
