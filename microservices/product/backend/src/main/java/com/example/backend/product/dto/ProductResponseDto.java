@@ -1,6 +1,5 @@
 package com.example.backend.product.dto;
 
-import com.example.backend.category.domain.Category;
 import com.example.backend.category.dto.CategoryResponseDto;
 import lombok.Getter;
 import lombok.Setter;
