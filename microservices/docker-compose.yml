@@ -69,7 +69,7 @@ services:
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
     ports:
-      - "3306:3306"
+      - "3307:3307"
     volumes:
       - mysql-data:/var/lib/mysql
       - ./user/CloudDB-User.sql:/docker-entrypoint-initdb.d/CloudDB-User.sql
