@@ -1,17 +1,18 @@
-import { ShoppingCart, User, Edit } from "lucide-react"
-import { useEffect, useState } from "react"
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Edit } from "lucide-react";
+import { useEffect } from "react";
+import { useNavigate, useParams } from 'react-router-dom';
+import { Header } from "../components/Header";
 
 interface UserProfile {
-  id: number
-  user_id: number
-  first_name: string
-  last_name: string
-  phone_number: string
-  address: string
-  bio: string
-  date_of_birth: string
-  country: string
+  id: number;
+  user_id: number;
+  first_name: string;
+  last_name: string;
+  phone_number: string;
+  address: string;
+  bio: string;
+  date_of_birth: string;
+  country: string;
 }
 
 const profile: UserProfile = {
@@ -24,40 +25,23 @@ const profile: UserProfile = {
   bio: "I love shopping for great products!",
   date_of_birth: "1990-01-01",
   country: "United States"
-}
+};
 
 export default function Profile() {
-  const navigate = useNavigate()
-  //const [profile, setProfile] = useState<UserProfile | null>(null);
-  const { id } = useParams<{ id: string }>()
-  
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+
   useEffect(() => {
     if (id) {
-      //fetchProfile(id).then((data) => {
-      //  setProfile(data)
-      //})
+      // fetchProfile(id).then((data) => {
+      //   setProfile(data);
+      // });
     }
-  }, [id])
-
-
+  }, [id]);
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 font-roboto">
-      <header className="bg-gray-800 shadow-md">
-        <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-          <Link to="/" className="text-2xl font-medium">My Store</Link>
-          <nav className="flex items-center space-x-4">
-            <button className="p-2 rounded-full hover:bg-gray-700 transition-colors">
-              <ShoppingCart className="h-6 w-6" />
-              <span className="sr-only">Cart</span>
-            </button>
-            <Link to="/profile" className="p-2 rounded-full hover:bg-gray-700 transition-colors">
-              <User className="h-6 w-6" />
-              <span className="sr-only">Profile</span>
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header id={id || ''} />
       <main className="container mx-auto px-4 py-8">
         <div className="max-w-2xl mx-auto bg-gray-800 rounded-lg shadow-lg overflow-hidden">
           <div className="p-6">
@@ -92,5 +76,5 @@ export default function Profile() {
         </div>
       </main>
     </div>
-  )
+  );
 }

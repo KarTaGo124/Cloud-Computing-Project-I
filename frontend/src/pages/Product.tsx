@@ -1,12 +1,13 @@
-import { useParams, Link } from 'react-router-dom'
-import { ShoppingCart, User, ArrowLeft } from "lucide-react"
+import { useParams, Link } from 'react-router-dom';
+import { ArrowLeft } from "lucide-react";
+import { Header } from '../components/Header';
 
 interface Product {
-  id: number
-  name: string
-  price: number
-  image: string
-  description: string
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  description: string;
 }
 
 const products: Product[] = [
@@ -16,33 +17,19 @@ const products: Product[] = [
   { id: 4, name: "Product 4", price: 49.99, image: "/placeholder.svg?height=400&width=400", description: "Product 4 is the latest addition to our catalog. It's innovative and stylish!" },
   { id: 5, name: "Product 5", price: 59.99, image: "/placeholder.svg?height=400&width=400", description: "If you're looking for the best, look no further than Product 5. It's simply the best!" },
   { id: 6, name: "Product 6", price: 69.99, image: "/placeholder.svg?height=400&width=400", description: "Product 6 is our premium offering. It's for those who demand nothing but the finest." },
-]
+];
 
 export default function Product() {
-  const { id } = useParams<{ id: string }>()
-  const product = products.find(p => p.id === Number(id))
+  const { id } = useParams<{ id: string }>();
+  const product = products.find(p => p.id === Number(id));
 
   if (!product) {
-    return <div>Product not found owo</div>
+    return <div>Product not found</div>;
   }
 
   return (
     <div className="min-h-screen bg-gray-900 text-gray-100 font-roboto">
-      <header className="bg-gray-800 shadow-md">
-        <div className="container mx-auto px-4 py-2 flex justify-between items-center">
-          <h1 className="text-2xl font-medium">My Store</h1>
-          <nav className="flex items-center space-x-4">
-            <button className="p-2 rounded-full hover:bg-gray-700 transition-colors">
-              <ShoppingCart className="h-6 w-6" />
-              <span className="sr-only">Cart</span>
-            </button>
-            <button className="p-2 rounded-full hover:bg-gray-700 transition-colors">
-              <User className="h-6 w-6" />
-              <span className="sr-only">Profile</span>
-            </button>
-          </nav>
-        </div>
-      </header>
+      <Header id={id || ''} />
       <main className="container mx-auto px-4 py-8">
         <Link to="/home" className="inline-flex items-center text-blue-400 hover:underline mb-6">
           <ArrowLeft className="h-4 w-4 mr-2" />
@@ -63,5 +50,5 @@ export default function Product() {
         </div>
       </main>
     </div>
-  )
+  );
 }
