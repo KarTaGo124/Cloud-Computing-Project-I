@@ -1,10 +1,36 @@
 const express = require('express');
 const axios = require('axios');
+const swaggerUi = require('swagger-ui-express');
+const swaggerDocs = require('./swagger.config');
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
+app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs));
+
+/**
+ * @swagger
+ * /orchestrator/orders/{orderId}/receipt:
+ *   get:
+ *     summary: Obtener el recibo completo de una orden
+ *     tags: [Orders]
+ *     description: Este endpoint obtiene todos los detalles de una orden, incluidos los productos y la información del usuario.
+ *     parameters:
+ *       - in: path
+ *         name: orderId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID de la orden
+ *     responses:
+ *       200:
+ *         description: Recibo de la orden obtenido exitosamente
+ *       404:
+ *         description: Orden no encontrada o no tiene productos
+ *       500:
+ *         description: Error al obtener el recibo
+ */
 app.get('/orchestrator/orders/:orderId/receipt', async (req, res) => {
   const orderId = req.params.orderId;
   try {
@@ -68,6 +94,28 @@ app.get('/orchestrator/orders/:orderId/receipt', async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /orchestrator/users/{userId}/favorites:
+ *   get:
+ *     summary: Obtener productos favoritos de un usuario
+ *     tags: [FavoritesProducts]
+ *     description: Este endpoint obtiene los productos favoritos de un usuario, incluyendo los detalles de cada producto.
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: ID del usuario
+ *     responses:
+ *       200:
+ *         description: Productos favoritos obtenidos exitosamente
+ *       404:
+ *         description: No se encontraron productos favoritos para este usuario
+ *       500:
+ *         description: Error al obtener los productos favoritos
+ */
 app.get('/orchestrator/users/:userId/favorites', async (req, res) => {
   const userId = req.params.userId;
   try {

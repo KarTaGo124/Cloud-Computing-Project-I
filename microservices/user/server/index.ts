@@ -5,7 +5,7 @@ import favProductRouter from "./FavoriteProduct/FavoriteProductRouter";
 import swaggerUi from "swagger-ui-express";
 import swaggerSpec from "../swaggerConfig";
 
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -16,9 +16,9 @@ app.use("/users", userRouter);
 app.use("/profile", userProfiieRouter);
 app.use("/favProducts", favProductRouter);
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
-  console.log(`Servidor corriendo en http://localhost:${PORT}`);
+	console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });

@@ -31,7 +31,7 @@ def get_db():
 
 db_dependency = Annotated[Session, Depends(get_db)]
 
-@app.post("/orders/")
+@app.post("/orders/", tags=["Orders"])
 async def create_order(order: OrderBase, db: db_dependency):
     db_order = models.Order(
         customer_id=order.customer_id,
@@ -51,21 +51,21 @@ async def create_order(order: OrderBase, db: db_dependency):
     db.commit()
     return {"message": "Order created successfully", "order_id": db_order.id}
 
-@app.get("/orders/{order_id}")
+@app.get("/orders/{order_id}", tags=["Orders"])
 async def get_order(order_id: int, db: db_dependency):
     result = db.query(models.Order).filter(models.Order.id == order_id).first()
     if not result:
         raise HTTPException(status_code=404, detail="Order not found")
     return result
 
-@app.get("/orders/customer/{customer_id}")
+@app.get("/orders/customer/{customer_id}", tags=["Orders"])
 async def get_customer_orders(customer_id: int, db: db_dependency):
     result = db.query(models.Order).filter(models.Order.customer_id == customer_id).all()
     if not result:
         raise HTTPException(status_code=404, detail="No orders found for this customer")
     return result
 
-@app.put("/orders/{order_id}")
+@app.put("/orders/{order_id}", tags=["Orders"])
 async def update_order(order_id: int, order_update: OrderUpdate, db: db_dependency):
     db_order = db.query(models.Order).filter(models.Order.id == order_id).first()
     if not db_order:
@@ -75,7 +75,7 @@ async def update_order(order_id: int, order_update: OrderUpdate, db: db_dependen
     db.commit()
     return {"message": "Order updated successfully"}
 
-@app.delete("/orders/{order_id}")
+@app.delete("/orders/{order_id}", tags=["Orders"])
 async def delete_order(order_id: int, db: db_dependency):
     db_order = db.query(models.Order).filter(models.Order.id == order_id).first()
     if not db_order:
@@ -88,33 +88,33 @@ async def delete_order(order_id: int, db: db_dependency):
     return {"message": "Order and associated products deleted successfully"}
 
 
-@app.get("/orders/{order_id}/status")
+@app.get("/orders/{order_id}/status", tags=["Orders"])
 async def get_order_status(order_id: int, db: db_dependency):
     result = db.query(models.Order.status).filter(models.Order.id == order_id).first()
     if not result:
         raise HTTPException(status_code=404, detail="Order not found")
     return {"order_id": order_id, "status": result.status}
 
-@app.get("/orders/{order_id}/products")
+@app.get("/orders/{order_id}/products", tags=["Orders"])
 async def get_order_products(order_id: int, db: db_dependency):
     result = db.query(models.OrderProduct).filter(models.OrderProduct.order_id == order_id).all()
     if not result:
         raise HTTPException(status_code=404, detail="No products found for this order")
     return result
 
-@app.get("/orders/")
+@app.get("/orders/", tags=["Orders"])
 async def get_all_orders(db: db_dependency):
     result = db.query(models.Order).all()
     return result
 
-@app.get("/orders/status/{status}")
+@app.get("/orders/status/{status}", tags=["Orders"])
 async def get_orders_by_status(status: int, db: db_dependency):
     result = db.query(models.Order).filter(models.Order.status == status).all()
     if not result:
         raise HTTPException(status_code=404, detail="No orders found with this status")
     return result
 
-@app.get("/orders/date/{date}")
+@app.get("/orders/date/{date}", tags=["Orders"])
 async def get_orders_by_date(date: str, db: db_dependency):
     try:
         parsed_date = datetime.strptime(date, "%Y-%m-%d").date()
