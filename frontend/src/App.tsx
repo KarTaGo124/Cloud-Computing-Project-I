@@ -5,6 +5,7 @@ import Register from "./pages/Register";
 import Product from "./components/Product";
 import Profile from "./pages/Profile";
 import { UserProvider } from "./contexts/UserContext";
+import OrderHistory from "./pages/OrderHistory";
 
 function App() {
 	return (
@@ -17,6 +18,7 @@ function App() {
 					<Route path="/login" element={<Login />} />
 					<Route path="/register" element={<Register />} />
 					<Route path="*" element={<h1>Not Found</h1>} />
+          <Route path="/order/history" element={<OrderHistory />} />
 				</Routes>
 			</Router>
 		</UserProvider>
