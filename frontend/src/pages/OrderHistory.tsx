@@ -188,25 +188,26 @@ export default function OrderHistory() {
         isOpen={isOpen}
         onOpenChange={onOpenChange}
         placement="center"
-        className="p-5"
+        className="p-4"
         classNames={{
-          base: "bg-white dark:bg-gray-800 rounded-lg",
-          header: "border-b border-gray-200 dark:border-gray-700",
-          body: "py-6",
-          footer: "border-t border-gray-200 dark:border-gray-700",
+          base: "bg-white dark:bg-gray-800", // Lighter background for better contrast
+          header:
+            "border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100", // Bolder text
+          body: "py-6 text-gray-700 dark:text-gray-200", // Consistent text color
+          footer: "border-t border-gray-300 dark:border-gray-700",
         }}
       >
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader className="flex flex-col gap-1 text-xl font-bold">
+              <ModalHeader className="flex flex-col gap-1 text-2xl font-semibold">
                 Order Details
               </ModalHeader>
               <ModalBody>
                 {selectedOrder && (
                   <div className="space-y-4">
-                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-                      <h3 className="text-lg font-semibold mb-2">
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
+                      <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
                         Order Information
                       </h3>
                       <p>
@@ -232,13 +233,15 @@ export default function OrderHistory() {
                         </span>
                       </p>
                     </div>
-                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
-                      <h3 className="text-lg font-semibold mb-2">Products</h3>
+                    <div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
+                      <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-gray-100">
+                        Products
+                      </h3>
                       <ul className="space-y-2">
                         {products[selectedOrder.id]?.map((product, index) => (
                           <li
                             key={index}
-                            className="bg-gray-50 dark:bg-gray-700 p-2 rounded"
+                            className="bg-white dark:bg-gray-600 p-2 rounded shadow"
                           >
                             <span className="font-medium">Product ID:</span>{" "}
                             {product.product_id},{" "}
@@ -252,7 +255,7 @@ export default function OrderHistory() {
                 )}
               </ModalBody>
               <ModalFooter>
-                <Button color="danger" variant="light" onPress={onClose}>
+                <Button color="primary" onPress={onClose}>
                   Close
                 </Button>
               </ModalFooter>
