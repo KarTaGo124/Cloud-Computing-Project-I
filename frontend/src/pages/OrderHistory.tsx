@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState } from "react";
 import { Button } from "@nextui-org/button";
 import {
@@ -10,6 +12,14 @@ import {
   getKeyValue,
 } from "@nextui-org/table";
 import axios from "axios";
+import {
+  Modal,
+  ModalBody,
+  ModalContent,
+  ModalFooter,
+  ModalHeader,
+  useDisclosure,
+} from "@nextui-org/react";
 
 type OrderProduct = {
   product_id: string;
@@ -20,7 +30,7 @@ type Order = {
   id: number;
   customer_id: number;
   order_date: Date;
-  status: string;
+  state: number;
 };
 
 const columns = [
@@ -63,6 +73,8 @@ const getAllOrdersProducts = async (order_id: number) => {
 export default function OrderHistory() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [products, setProducts] = useState<Record<number, OrderProduct[]>>({});
+  const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+  const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
 
   useEffect(() => {
     const fetchAllOrders = async () => {
@@ -102,11 +114,14 @@ export default function OrderHistory() {
     }
   }, [orders]);
 
-  console.log(orders);
-  console.log(products);
+  const handleRowClick = (order: Order) => {
+    setSelectedOrder(order);
+    onOpen();
+  };
 
+  console.log("products", products);
   return (
-    <div className="space-y-4 p-8 max-w-4xl mx-auto bg-gray-100 min-h-screen">
+    <div className="flex flex-col space-y-4 p-8 max-w-4xl mx-auto bg-gray-100 min-h-screen">
       <h1 className="text-2xl font-bold mb-6 text-center text-gray-800">
         Order History
       </h1>
@@ -119,6 +134,10 @@ export default function OrderHistory() {
           th: "bg-gray-800 text-gray-300 font-bold border-b border-gray-700",
           td: "py-3 text-gray-300 border-b border-gray-700",
         }}
+        onRowAction={(id) => {
+          const order = orders.find((order) => order.id === id);
+          if (order) handleRowClick(order);
+        }}
       >
         <TableHeader columns={columns}>
           {(column) => (
@@ -127,11 +146,12 @@ export default function OrderHistory() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={orders}>
+        <TableBody emptyContent={"No rows to display."} items={orders}>
           {(item) => (
             <TableRow
               key={item.id}
-              className="hover:bg-gray-800 transition-colors"
+              className="hover:bg-gray-800 transition-colors cursor-pointer"
+              onClick={() => handleRowClick(item)}
             >
               {(columnKey) => (
                 <TableCell className="text-center">
@@ -164,6 +184,82 @@ export default function OrderHistory() {
         </span>
         <Button color="primary">Next</Button>
       </div>
+      <Modal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        placement="center"
+        className="p-5"
+        classNames={{
+          base: "bg-white dark:bg-gray-800 rounded-lg",
+          header: "border-b border-gray-200 dark:border-gray-700",
+          body: "py-6",
+          footer: "border-t border-gray-200 dark:border-gray-700",
+        }}
+      >
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1 text-xl font-bold">
+                Order Details
+              </ModalHeader>
+              <ModalBody>
+                {selectedOrder && (
+                  <div className="space-y-4">
+                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                      <h3 className="text-lg font-semibold mb-2">
+                        Order Information
+                      </h3>
+                      <p>
+                        <span className="font-medium">Order ID:</span>{" "}
+                        {selectedOrder.id}
+                      </p>
+                      <p>
+                        <span className="font-medium">Date:</span>{" "}
+                        {new Date(
+                          selectedOrder.order_date
+                        ).toLocaleDateString()}
+                      </p>
+                      <p>
+                        <span className="font-medium">Status:</span>{" "}
+                        <span
+                          className={
+                            selectedOrder.state == 1
+                              ? "text-green-500"
+                              : "text-yellow-500"
+                          }
+                        >
+                          {selectedOrder.state == 1 ? "Delivered" : "Pending"}
+                        </span>
+                      </p>
+                    </div>
+                    <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow">
+                      <h3 className="text-lg font-semibold mb-2">Products</h3>
+                      <ul className="space-y-2">
+                        {products[selectedOrder.id]?.map((product, index) => (
+                          <li
+                            key={index}
+                            className="bg-gray-50 dark:bg-gray-700 p-2 rounded"
+                          >
+                            <span className="font-medium">Product ID:</span>{" "}
+                            {product.product_id},{" "}
+                            <span className="font-medium">Quantity:</span>{" "}
+                            {product.quantity}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+                )}
+              </ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }
