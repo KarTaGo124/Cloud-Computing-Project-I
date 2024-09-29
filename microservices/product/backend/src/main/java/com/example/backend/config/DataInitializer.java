@@ -17,7 +17,6 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initData(CategoryRepository categoryRepository, ProductRepository productRepository) {
         return args -> {
-            // Inserción de Categorías
             Category electronics = new Category();
             electronics.setId(new ObjectId("66ecb5cd128f2fef1c964034"));
             electronics.setName("Electronics");
@@ -33,7 +32,6 @@ public class DataInitializer {
             books.setName("Books");
             books.setDescription("Fictional and non-fictional literature");
 
-            // Agrega más categorías
             Category clothing = new Category();
             clothing.setId(new ObjectId());
             clothing.setName("Clothing");
