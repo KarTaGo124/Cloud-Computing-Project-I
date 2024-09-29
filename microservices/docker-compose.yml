@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://<IP_VM1>:27017/database
+      SPRING_DATA_MONGODB_URI: mongodb://52.204.117.43:27017/database
     networks:
       - backend-network
 
@@ -15,7 +15,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@<IP_VM1>:5432/order
+      DATABASE_URL: postgresql://postgres:postgres@52.204.117.43:5432/order
     networks:
       - backend-network
 
@@ -27,7 +27,7 @@ services:
     ports:
       - "8081:8081"
     environment:
-      DB_HOST: <IP_VM1>
+      DB_HOST: 52.204.117.43
       DB_USER: user
       DB_PASSWORD: userpassword
       DB_NAME: userdb
