@@ -1,107 +1,44 @@
 version: '3.9'
 services:
-  # MongoDB for Product Service
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    ports:
-      - "27017:27017"
-    environment:
-      MONGO_INITDB_DATABASE: database
-    networks:
-      - backend-network
-    volumes:
-      - mongo-data:/data/db
-
-  # Product Service
   product-backend:
     image: kartago124/product-backend
     container_name: product-backend
     ports:
       - "8080:8080"
-    depends_on:
-      - mongo
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://<IP_VM1>:27017/database
     networks:
       - backend-network
-    environment:
-      SPRING_DATA_MONGODB_URI: mongodb://mongo:27017/database
 
-  # Postgres for Order Service
-  db:
-    image: postgres:15-alpine
-    volumes:
-      - postgres_data:/var/lib/postgresql/data/
-    ports:
-      - "5432:5432"
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: order
-    networks:
-      - backend-network
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # Order Service
   api-order:
     image: kartago124/order-backend
-    depends_on:
-      db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: postgresql://postgres:postgres@db:5432/order
     ports:
-      - 8000:8000
-    networks:
-      - backend-network
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "postgres"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-
-  # MySQL for User Service
-  mysql-db:
-    image: mysql:8.0
-    container_name: mysql-db
+      - "8000:8000"
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: userdb
-      MYSQL_USER: user
-      MYSQL_PASSWORD: userpassword
-    ports:
-      - "3307:3307"
-    volumes:
-      - mysql-data:/var/lib/mysql
-      - ./user/CloudDB-User.sql:/docker-entrypoint-initdb.d/CloudDB-User.sql
+      DATABASE_URL: postgresql://postgres:postgres@<IP_VM1>:5432/order
     networks:
       - backend-network
 
-  # User Service
   user-backend:
     build: ./user
     container_name: user-backend
     env_file:
       - ./user/.env
-    depends_on:
-      - mysql-db
     ports:
       - "8081:8081"
-    volumes:
-      - ./user:/app
-      - /app/node_modules
+    environment:
+      DB_HOST: <IP_VM1>
+      DB_USER: user
+      DB_PASSWORD: userpassword
+      DB_NAME: userdb
     networks:
       - backend-network
 
-   # Orchestrator Service
   orchestrator:
-    build: ./orchestrator  # Asume que el orquestador está en el directorio ./orchestrator
+    build: ./orchestrator
     container_name: orchestrator
     ports:
-      - "3000:3000"  # Puerto para el orquestador
+      - "3000:3000"
     networks:
       - backend-network
     depends_on:
@@ -112,11 +49,3 @@ services:
 networks:
   backend-network:
     driver: bridge
-
-volumes:
-  mongo-data:
-    driver: local
-  postgres_data:
-    driver: local
-  mysql-data:
-    driver: local
