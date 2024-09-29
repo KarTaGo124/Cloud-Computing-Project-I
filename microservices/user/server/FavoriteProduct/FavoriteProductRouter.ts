@@ -4,16 +4,16 @@ import FavoriteProductController from "./Application/FavoriteProductController";
 const favProductRouter = Router();
 
 favProductRouter.get(
-  "/:id",
-  FavoriteProductController.getFavoriteProductWithId
+	"/:userId",
+	FavoriteProductController.getFavoriteProductsByUserId
 );
 favProductRouter.post(
-  "/add/:userId/:productId",
-  FavoriteProductController.addFavoriteProduct
+	"/add/:userId/:productId",
+	FavoriteProductController.addFavoriteProduct
 );
 favProductRouter.delete(
-  "/remove/:userId/:productId",
-  FavoriteProductController.removeFavoriteProduct
+	"/remove/:userId/:productId",
+	FavoriteProductController.removeFavoriteProduct
 );
 
 export default favProductRouter;

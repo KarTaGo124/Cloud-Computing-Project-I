@@ -37,6 +37,8 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: order
+    networks:
+      - backend-network
     healthcheck:
       test: ["CMD-SHELL", "pg_isready -U postgres"]
       interval: 10s
@@ -53,6 +55,8 @@ services:
       DATABASE_URL: postgresql://postgres:postgres@db:5432/order
     ports:
       - 8000:8000
+    networks:
+      - backend-network
     healthcheck:
       test: ["CMD", "pg_isready", "-U", "postgres"]
       interval: 10s
