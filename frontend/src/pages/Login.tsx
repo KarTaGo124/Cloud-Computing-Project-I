@@ -1,28 +1,38 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useUser } from "../contexts/UserContext";
+import { login } from "../services/user";
 
 export default function Login() {
 	const { setUser } = useUser();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [errorMessage, setErrorMessage] = useState("");
 	const navigate = useNavigate();
 
 	const handleLogin = async (event: React.FormEvent) => {
 		event.preventDefault();
 
-		const userId = "1";
-		const userEmail = "user@example.com";
+		try {
+			const userData = await login(email, password);
 
-		setUser({ id: userId, email: userEmail });
-
-		navigate("/home");
+			setUser({ id: userData.id, email: userData.email });
+			navigate("/home");
+		} catch (error) {
+			console.error(error);
+			setErrorMessage("Error logging in. Please check your credentials.");
+		}
 	};
 
 	return (
 		<div className="min-h-screen bg-gray-900 text-gray-100 font-roboto flex items-center justify-center">
 			<div className="bg-gray-800 p-8 rounded-lg shadow-lg w-full max-w-md">
 				<h1 className="text-3xl font-medium mb-6 text-center">Login</h1>
+				{errorMessage && (
+					<p className="text-red-500 text-center mb-4">
+						{errorMessage}
+					</p>
+				)}
 				<form className="space-y-6" onSubmit={handleLogin}>
 					<div>
 						<label
