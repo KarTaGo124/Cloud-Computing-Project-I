@@ -18,6 +18,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/categories")
 @RequiredArgsConstructor
 @Tag(name = "Category API", description = "Operaciones relacionadas con las categorías de productos")
+@CrossOrigin(origins = "*")
 public class CategoryController {
 
     private final CategoryService categoryService;

@@ -31,6 +31,7 @@ public class ProductService {
         productResponseDto.setDescription(product.getDescription());
         productResponseDto.setPrice(product.getPrice());
         productResponseDto.setStock(product.getStock());
+        productResponseDto.setImageUrl(product.getImageUrl());
         Category category = categoryRepository.findById(product.getCategoryId())
                 .orElseThrow(() -> new CategoryNotFoundException("Categoría no encontrada"));
         CategoryResponseDto categoryResponseDto = new CategoryResponseDto();
@@ -47,12 +48,13 @@ public class ProductService {
         product.setDescription(productRequestDto.getDescription());
         product.setPrice(productRequestDto.getPrice());
         product.setStock(productRequestDto.getStock());
+        product.setImageUrl(productRequestDto.getImageUrl());
         product.setCategoryId(new ObjectId(productRequestDto.getCategoryId()));
 
         if (!categoryRepository.existsById(product.getCategoryId())) {
             throw new CategoryNotFoundException("Categoría no encontrada");
         }
-        
+
         try {
             productRepository.save(product);
             return mapToResponseDto(product);
@@ -74,6 +76,8 @@ public class ProductService {
             existingProduct.setPrice(productRequestDto.getPrice());
         if (productRequestDto.getStock() != null)
             existingProduct.setStock(productRequestDto.getStock());
+        if (productRequestDto.getImageUrl() != null)
+            existingProduct.setImageUrl(productRequestDto.getImageUrl());
         if (productRequestDto.getCategoryId() != null)
             existingProduct.setCategoryId(category.getId());
 
@@ -99,7 +103,8 @@ public class ProductService {
             productRepository.deleteById(id);
         } catch (Exception e) {
             throw new ProductDeletionException("Error al eliminar el producto");
-        }    }
+        }
+    }
 
     public Iterable<ProductResponseDto> findAll() {
         Iterable<Product> products = productRepository.findAll();
