@@ -17,7 +17,6 @@ public class DataInitializer {
     @Bean
     CommandLineRunner initData(CategoryRepository categoryRepository, ProductRepository productRepository) {
         return args -> {
-            // Inserción de Categorías
             Category electronics = new Category();
             electronics.setId(new ObjectId("66ecb5cd128f2fef1c964034"));
             electronics.setName("Electronics");
@@ -33,7 +32,6 @@ public class DataInitializer {
             books.setName("Books");
             books.setDescription("Fictional and non-fictional literature");
 
-            // Agrega más categorías
             Category clothing = new Category();
             clothing.setId(new ObjectId());
             clothing.setName("Clothing");
@@ -56,13 +54,13 @@ public class DataInitializer {
 
             categoryRepository.saveAll(Arrays.asList(electronics, games, books, clothing, furniture, beauty, sports));
 
-            // Inserción de Productos
             Product smartphone = new Product();
             smartphone.setId(new ObjectId());
             smartphone.setName("Smartphone");
             smartphone.setDescription("A powerful smartphone");
             smartphone.setPrice(699.99);
             smartphone.setStock(100L);
+            smartphone.setImageUrl("http://localhost:8080/images/smartphone.jpg");
             smartphone.setCategoryId(electronics.getId());
 
             Product laptop = new Product();
@@ -71,6 +69,7 @@ public class DataInitializer {
             laptop.setDescription("A powerful laptop");
             laptop.setPrice(1200.99);
             laptop.setStock(50L);
+            laptop.setImageUrl("http://localhost:8080/images/laptop.jpg");
             laptop.setCategoryId(electronics.getId());
 
             Product tablet = new Product();
@@ -79,15 +78,16 @@ public class DataInitializer {
             tablet.setDescription("A powerful tablet");
             tablet.setPrice(499.99);
             tablet.setStock(80L);
+            tablet.setImageUrl("http://localhost:8080/images/tablet.jpg");
             tablet.setCategoryId(electronics.getId());
 
-            // Más productos con el mismo patrón
             Product chess = new Product();
             chess.setId(new ObjectId());
             chess.setName("Chess");
             chess.setDescription("Classic board game");
             chess.setPrice(20.99);
             chess.setStock(150L);
+            chess.setImageUrl("http://localhost:8080/images/chess.jpg");
             chess.setCategoryId(games.getId());
 
             Product monopoly = new Product();
@@ -96,6 +96,7 @@ public class DataInitializer {
             monopoly.setDescription("Famous board game");
             monopoly.setPrice(25.99);
             monopoly.setStock(120L);
+            monopoly.setImageUrl("http://localhost:8080/images/monopoly.jpg");
             monopoly.setCategoryId(games.getId());
 
             Product videoGameConsole = new Product();
@@ -104,6 +105,7 @@ public class DataInitializer {
             videoGameConsole.setDescription("Next-gen console");
             videoGameConsole.setPrice(499.99);
             videoGameConsole.setStock(60L);
+            videoGameConsole.setImageUrl("http://localhost:8080/images/videoGameConsole.jpg");
             videoGameConsole.setCategoryId(games.getId());
 
             Product novel = new Product();
@@ -112,6 +114,7 @@ public class DataInitializer {
             novel.setDescription("Best-seller novel");
             novel.setPrice(12.99);
             novel.setStock(200L);
+            novel.setImageUrl("http://localhost:8080/images/novel.jpg");
             novel.setCategoryId(books.getId());
 
             Product cookbook = new Product();
@@ -120,6 +123,7 @@ public class DataInitializer {
             cookbook.setDescription("Delicious recipes");
             cookbook.setPrice(18.99);
             cookbook.setStock(90L);
+            cookbook.setImageUrl("http://localhost:8080/images/cookbook.jpg");
             cookbook.setCategoryId(books.getId());
 
             Product textbook = new Product();
@@ -128,15 +132,16 @@ public class DataInitializer {
             textbook.setDescription("Educational textbook");
             textbook.setPrice(55.99);
             textbook.setStock(70L);
+            textbook.setImageUrl("http://localhost:8080/images/textbook.jpg");
             textbook.setCategoryId(books.getId());
 
-            // Más productos
             Product tshirt = new Product();
             tshirt.setId(new ObjectId());
             tshirt.setName("T-shirt");
             tshirt.setDescription("Cotton T-shirt");
             tshirt.setPrice(14.99);
             tshirt.setStock(300L);
+            tshirt.setImageUrl("http://localhost:8080/images/tshirt.jpg");
             tshirt.setCategoryId(clothing.getId());
 
             Product jeans = new Product();
@@ -145,6 +150,7 @@ public class DataInitializer {
             jeans.setDescription("Comfortable jeans");
             jeans.setPrice(39.99);
             jeans.setStock(200L);
+            jeans.setImageUrl("http://localhost:8080/images/jeans.jpg");
             jeans.setCategoryId(clothing.getId());
 
             Product sofa = new Product();
@@ -153,6 +159,7 @@ public class DataInitializer {
             sofa.setDescription("Leather sofa");
             sofa.setPrice(799.99);
             sofa.setStock(20L);
+            sofa.setImageUrl("http://localhost:8080/images/sofa.jpg");
             sofa.setCategoryId(furniture.getId());
 
             Product desk = new Product();
@@ -161,6 +168,7 @@ public class DataInitializer {
             desk.setDescription("Wooden office desk");
             desk.setPrice(159.99);
             desk.setStock(40L);
+            desk.setImageUrl("http://localhost:8080/images/desk.jpg");
             desk.setCategoryId(furniture.getId());
 
             Product shampoo = new Product();
@@ -169,6 +177,7 @@ public class DataInitializer {
             shampoo.setDescription("Organic hair shampoo");
             shampoo.setPrice(8.99);
             shampoo.setStock(500L);
+            shampoo.setImageUrl("http://localhost:8080/images/shampoo.jpg");
             shampoo.setCategoryId(beauty.getId());
 
             Product moisturizer = new Product();
@@ -177,6 +186,7 @@ public class DataInitializer {
             moisturizer.setDescription("Face moisturizer");
             moisturizer.setPrice(19.99);
             moisturizer.setStock(250L);
+            moisturizer.setImageUrl("http://localhost:8080/images/moisturizer.jpg");
             moisturizer.setCategoryId(beauty.getId());
 
             Product basketball = new Product();
@@ -185,6 +195,7 @@ public class DataInitializer {
             basketball.setDescription("Official size basketball");
             basketball.setPrice(29.99);
             basketball.setStock(100L);
+            basketball.setImageUrl("http://localhost:8080/images/basketball.jpg");
             basketball.setCategoryId(sports.getId());
 
             Product tennisRacket = new Product();
@@ -193,12 +204,21 @@ public class DataInitializer {
             tennisRacket.setDescription("Professional tennis racket");
             tennisRacket.setPrice(129.99);
             tennisRacket.setStock(60L);
+            tennisRacket.setImageUrl("http://localhost:8080/images/tennisRacket.jpg");
             tennisRacket.setCategoryId(sports.getId());
+
+            Product football = new Product();
+            football.setId(new ObjectId());
+            football.setName("Football");
+            football.setDescription("Official size football");
+            football.setPrice(19.99);
+            football.setStock(150L);
+            football.setImageUrl("http://localhost:8080/images/football.jpg");
+            football.setCategoryId(sports.getId());
 
             productRepository.saveAll(Arrays.asList(
                     smartphone, laptop, tablet, chess, monopoly, videoGameConsole, novel, cookbook, textbook,
-                    tshirt, jeans, sofa, desk, shampoo, moisturizer, basketball, tennisRacket
-            ));
+                    tshirt, jeans, sofa, desk, shampoo, moisturizer, basketball, tennisRacket, football));
         };
     }
 }

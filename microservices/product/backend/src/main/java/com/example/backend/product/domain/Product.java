@@ -21,5 +21,7 @@ public class Product {
 
     private Long stock;
 
+    private String imageUrl;
+
     private ObjectId categoryId;
 }
