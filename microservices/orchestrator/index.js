@@ -142,6 +142,7 @@ app.get('/orchestrator/users/:userId/favorites', async (req, res) => {
         name: product.name,
         description: product.description,
         price: product.price,
+        imageUrl: product.imageUrl,
         category: product.category
       };
     });

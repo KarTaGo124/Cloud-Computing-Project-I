@@ -79,3 +79,34 @@ export const deleteUser = async (id: number): Promise<void> => {
 		throw error;
 	}
 };
+
+export const addFavoriteProduct = async (userId: number, productId: string) => {
+	try {
+		const response = await axios.post(
+			`${baseUrl}/favProducts/add/${userId}/${productId}`,
+			{
+				userId,
+				productId,
+			}
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error adding favorite product:", error);
+		throw error;
+	}
+};
+
+export const removeFavoriteProduct = async (
+	userId: number,
+	productId: string
+) => {
+	try {
+		const response = await axios.delete(
+			`${baseUrl}/favProducts/remove/${userId}/${productId}`
+		);
+		return response.data;
+	} catch (error) {
+		console.error("Error removing favorite product:", error);
+		throw error;
+	}
+};

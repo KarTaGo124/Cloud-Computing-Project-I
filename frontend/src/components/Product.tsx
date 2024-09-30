@@ -1,57 +1,68 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { getProductById } from "../services/product";
-import { Header } from "./Header";
-import { Product } from "../interfaces/product";
+import { Product as ProductInterface } from "../interfaces/product";
+import { useNavigate } from "react-router-dom";
 
-export default function ProductPage() {
-	const { id } = useParams<{ id: string }>();
-	const [product, setProduct] = useState<Product | null>(null);
+interface ProductProps {
+	product: ProductInterface;
+	isFavorite: boolean;
+	handleAddFavorite: (productId: string) => void;
+	handleRemoveFavorite: (productId: string) => void;
+	addToCart: (product: ProductInterface) => void;
+}
 
-	useEffect(() => {
-		async function fetchProduct() {
-			if (id) {
-				try {
-					const data = await getProductById(id);
-					setProduct(data);
-				} catch (error) {
-					console.error(
-						`Error fetching product with id ${id}:`,
-						error
-					);
-				}
-			}
-		}
-
-		fetchProduct();
-	}, [id]);
-
-	if (!product) {
-		return <div>Product not found</div>;
-	}
+export default function Product({
+	product,
+	isFavorite,
+	handleAddFavorite,
+	handleRemoveFavorite,
+	addToCart,
+}: ProductProps) {
+	const navigate = useNavigate();
 
 	return (
-		<div className="min-h-screen bg-gray-900 text-gray-100 font-roboto">
-			<Header />
-			<main className="container mx-auto px-4 py-8">
-				<h1 className="text-3xl font-medium mb-4">{product.name}</h1>
-				<p className="text-gray-300 mb-6">{product.description}</p>
-				<p className="text-2xl text-blue-400 mb-4">
-					${product.price.toFixed(2)}
-				</p>
-				<p className="text-gray-300 mb-6">Stock: {product.stock}</p>
-				<p className="text-gray-300 mb-6">
-					Category:{" "}
-					{product.category.name +
-						" - " +
-						product.category.description}
-				</p>
+		<div className="block cursor-pointer">
+			<div className="bg-gray-800 rounded-lg overflow-hidden shadow-lg transition-transform hover:scale-105">
 				<img
+					onClick={() => navigate(`/products/${product.id}`)}
 					src={product.imageUrl}
 					alt={product.name}
-					className="w-full rounded-lg shadow-lg"
+					className="w-full h-48 object-cover"
 				/>
-			</main>
+				<div className="p-4">
+					<h3 className="text-xl font-medium mb-2">{product.name}</h3>
+					<p className="text-gray-400 mb-4">
+						${product.price.toFixed(2)}
+					</p>
+					<div className="flex gap-x-2">
+						<button
+							onClick={() => navigate(`/products/${product.id}`)}
+							className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition-colors"
+						>
+							View Details
+						</button>
+						<button
+							className="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded transition-colors"
+							onClick={() => addToCart(product)}
+						>
+							Add to Cart
+						</button>
+						{isFavorite ? (
+							<button
+								className="bg-red-500 hover:bg-red-600 text-white font-medium py-2 px-4 rounded transition-colors"
+								onClick={() => handleRemoveFavorite(product.id)}
+							>
+								Remove from Favorites
+							</button>
+						) : (
+							<button
+								className="bg-yellow-500 hover:bg-yellow-600 text-white font-medium py-2 px-4 rounded transition-colors"
+								onClick={() => handleAddFavorite(product.id)}
+							>
+								Add to Favorites
+							</button>
+						)}
+					</div>
+				</div>
+			</div>
 		</div>
 	);
 }
