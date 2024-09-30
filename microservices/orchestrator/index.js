@@ -2,8 +2,15 @@ const express = require('express');
 const axios = require('axios');
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocs = require('./swagger.config');
+const cors = require('cors');
 const app = express();
 const port = 3000;
+
+const corsOptions = {
+  origin: '*',
+  methods: 'GET,POST,PUT,DELETE',
+};
+app.use(cors(corsOptions));
 
 app.use(express.json());
 
@@ -52,6 +59,7 @@ app.get('/orchestrator/orders/:orderId/receipt', async (req, res) => {
         name: product.name,
         price: product.price,
         quantity: orderProduct.quantity,
+        imageUrl: product.imageUrl,
         category: product.category,
         total: product.price * orderProduct.quantity
       };
