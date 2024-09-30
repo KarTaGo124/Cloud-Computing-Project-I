@@ -8,7 +8,9 @@ import { CartItem } from "../interfaces/order";
 export const Header: React.FC = () => {
 	const navigate = useNavigate();
 	const { id, setUser } = useUser();
-	const { cartItems, addCart } = useContext(CartContext);
+	const cardContext = useContext(CartContext);
+	const cartItems = cardContext?.cartItems || [];
+	const clearCart = cardContext?.clearCart || (() => {});
 	const cartItemCount = cartItems.reduce(
 		(total: number, item: CartItem) => total + item.quantity,
 		0
@@ -17,6 +19,7 @@ export const Header: React.FC = () => {
 	const handleLogout = () => {
 		setUser({ id: 0, email: "" });
 		localStorage.removeItem("user");
+		clearCart();
 		navigate("/login");
 	};
 
@@ -57,13 +60,13 @@ export const Header: React.FC = () => {
 									</span>
 								)}
 							</button>
-							<div
+							<button
 								onClick={() => navigate(`/profile/${id}`)}
 								className="p-2 rounded-full hover:bg-gray-700 transition-colors"
 							>
 								<User className="h-6 w-6" />
 								<span className="sr-only">Profile</span>
-							</div>
+							</button>
 							<button
 								onClick={() => navigate("/order/history")}
 								className="p-2 rounded-full hover:bg-gray-700 transition-colors"
