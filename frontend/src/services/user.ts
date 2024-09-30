@@ -69,3 +69,13 @@ export const updateUserProfile = async (
 		throw error;
 	}
 };
+
+export const deleteUser = async (id: number): Promise<void> => {
+	try {
+		const response = await axios.delete(`${baseUrl}/users/${id}`);
+		return response.data;
+	} catch (error) {
+		console.error(`Error deleting user with id ${id}:`, error);
+		throw error;
+	}
+};

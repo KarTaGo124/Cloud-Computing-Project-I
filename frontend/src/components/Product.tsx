@@ -32,7 +32,7 @@ export default function ProductPage() {
 
 	return (
 		<div className="min-h-screen bg-gray-900 text-gray-100 font-roboto">
-			<Header id={id || ""} />
+			<Header />
 			<main className="container mx-auto px-4 py-8">
 				<h1 className="text-3xl font-medium mb-4">{product.name}</h1>
 				<p className="text-gray-300 mb-6">{product.description}</p>

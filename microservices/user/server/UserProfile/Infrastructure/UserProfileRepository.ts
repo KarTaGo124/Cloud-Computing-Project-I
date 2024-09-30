@@ -38,7 +38,7 @@ const updateAllUserProfile = async (
 	id: number,
 	first_name: string,
 	last_name: string,
-	phone_number: number,
+	phone_number: string,
 	address: string,
 	bio: string,
 	date_of_birth: Date,

@@ -10,6 +10,8 @@ export interface UserProfile {
 	last_name: string;
 	phone_number: string;
 	address: string;
+	bio: string;
+	date_of_birth: string;
 	country: string;
 }
 

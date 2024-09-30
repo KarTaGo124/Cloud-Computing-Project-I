@@ -17,6 +17,7 @@ export default function Login() {
 			const userData = await login(email, password);
 
 			setUser({ id: userData.id, email: userData.email });
+			console.log("User logged in:", userData);
 			navigate("/home");
 		} catch (error) {
 			console.error(error);
