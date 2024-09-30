@@ -1,7 +1,4 @@
-"use client";
-
 import { useEffect, useState } from "react";
-import { Button } from "@nextui-org/button";
 import {
 	Table,
 	TableHeader,
@@ -11,29 +8,16 @@ import {
 	TableCell,
 	getKeyValue,
 } from "@nextui-org/table";
-import axios from "axios";
 import {
 	Modal,
 	ModalBody,
 	ModalContent,
-	ModalFooter,
-	ModalHeader,
 	useDisclosure,
 } from "@nextui-org/react";
 import { useUser } from "../contexts/UserContext";
 import { Header } from "../components/Header";
-
-type OrderProduct = {
-	product_id: string;
-	quantity: number;
-};
-
-type Order = {
-	id: number;
-	customer_id: number;
-	order_date: Date;
-	state: number;
-};
+import { Order, OrderProduct } from "../interfaces/order";
+import { getAllOrders, getAllOrdersProducts } from "../services/order";
 
 const columns = [
 	{
@@ -50,28 +34,6 @@ const columns = [
 	},
 ];
 
-const getAllOrders = async (user_id: number) => {
-	try {
-		const res = await axios.get(
-			`http://127.0.0.1:8000/orders/customer/${user_id}`
-		);
-		return res;
-	} catch (error) {
-		console.log(error);
-	}
-};
-
-const getAllOrdersProducts = async (order_id: number) => {
-	try {
-		const res = await axios.get(
-			`http://127.0.0.1:8000/orders/${order_id}/products`
-		);
-		return res;
-	} catch (error) {
-		console.log(error);
-	}
-};
-
 export default function OrderHistory() {
 	const [orders, setOrders] = useState<Order[]>([]);
 	const [products, setProducts] = useState<Record<number, OrderProduct[]>>(
@@ -86,7 +48,7 @@ export default function OrderHistory() {
 			try {
 				const allOrders = await getAllOrders(id);
 				console.log(allOrders);
-				if (allOrders?.data) setOrders(allOrders.data);
+				if (allOrders) setOrders(allOrders);
 			} catch (error) {
 				console.log(error);
 			}
@@ -101,7 +63,8 @@ export default function OrderHistory() {
 				try {
 					const productPromises = orders.map(async (order) => {
 						const res = await getAllOrdersProducts(order.id);
-						return { orderId: order.id, products: res?.data || [] };
+						console.log(res);
+						return { orderId: order.id, products: res || [] };
 					});
 
 					const resolvedProducts = await Promise.all(productPromises);
@@ -125,7 +88,6 @@ export default function OrderHistory() {
 		onOpen();
 	};
 
-	console.log("products", products);
 	return (
 		<div className="min-h-screen bg-gray-900 text-gray-100 font-roboto">
 			<Header />
@@ -191,32 +153,21 @@ export default function OrderHistory() {
 					</TableBody>
 				</Table>
 
-				<div className="flex justify-between items-center mt-6">
-					<Button color="primary">Previous</Button>
-					<span className="text-gray-600">
-						Page {1} of {10}
-					</span>
-					<Button color="primary">Next</Button>
-				</div>
 				<Modal
 					isOpen={isOpen}
 					onOpenChange={onOpenChange}
-					placement="center"
-					className="p-4"
+					hideCloseButton
+					className="my-auto inset-0 z-50 flex items-center justify-center text-3xl"
 					classNames={{
-						base: "bg-white dark:bg-gray-800", // Lighter background for better contrast
-						header: "border-b border-gray-300 dark:border-gray-700 text-gray-900 dark:text-gray-100", // Bolder text
-						body: "py-6 text-gray-700 dark:text-gray-200", // Consistent text color
+						base: "bg-white dark:bg-gray-800 p-0",
+						body: "py-4 text-gray-700 dark:text-gray-200",
 						footer: "border-t border-gray-300 dark:border-gray-700",
 					}}
 				>
-					<ModalContent>
-						{(onClose) => (
+					<ModalContent className="w-full max-w-2xl max-h-screen overflow-auto rounded-lg">
+						{() => (
 							<>
-								<ModalHeader className="flex flex-col gap-1 text-2xl font-semibold">
-									Order Details
-								</ModalHeader>
-								<ModalBody>
+								<ModalBody className="p-4">
 									{selectedOrder && (
 										<div className="space-y-4">
 											<div className="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
@@ -240,7 +191,7 @@ export default function OrderHistory() {
 												<p>
 													<span className="font-medium">
 														Status:
-													</span>{" "}
+													</span>
 													<span
 														className={
 															selectedOrder.state ==
@@ -284,11 +235,6 @@ export default function OrderHistory() {
 										</div>
 									)}
 								</ModalBody>
-								<ModalFooter>
-									<Button color="primary" onPress={onClose}>
-										Close
-									</Button>
-								</ModalFooter>
 							</>
 						)}
 					</ModalContent>
