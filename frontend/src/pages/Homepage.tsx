@@ -22,11 +22,24 @@ export default function HomePage() {
 		async function fetchFavorites() {
 			try {
 				const favorites = await getUserFavoriteProducts(id.toString());
-				setFavoriteProducts(
-					favorites.favoriteProducts.map((p) => p.product_id)
+				const favoriteIds = favorites.favoriteProducts.map(
+					(p) => p.product_id
+				);
+				setFavoriteProducts(favoriteIds);
+
+				localStorage.setItem(
+					`favoriteProducts_${id}`,
+					JSON.stringify(favoriteIds)
 				);
 			} catch (error) {
 				console.error("Error fetching favorite products", error);
+
+				const storedFavorites = localStorage.getItem(
+					`favoriteProducts_${id}`
+				);
+				if (storedFavorites) {
+					setFavoriteProducts(JSON.parse(storedFavorites));
+				}
 			}
 		}
 		fetchFavorites();
@@ -36,6 +49,11 @@ export default function HomePage() {
 		try {
 			await addFavoriteProduct(id, productId);
 			setFavoriteProducts((prev) => [...prev, productId]);
+
+			localStorage.setItem(
+				`favoriteProducts_${id}`,
+				JSON.stringify([...favoriteProducts, productId])
+			);
 		} catch (error) {
 			console.error("Error adding product to favorites", error);
 		}
@@ -44,8 +62,14 @@ export default function HomePage() {
 	const handleRemoveFavorite = async (productId: string) => {
 		try {
 			await removeFavoriteProduct(id, productId);
-			setFavoriteProducts((prev) =>
-				prev.filter((favId) => favId !== productId)
+			const updatedFavorites = favoriteProducts.filter(
+				(favId) => favId !== productId
+			);
+			setFavoriteProducts(updatedFavorites);
+
+			localStorage.setItem(
+				`favoriteProducts_${id}`,
+				JSON.stringify(updatedFavorites)
 			);
 		} catch (error) {
 			console.error("Error removing product from favorites", error);
