@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect, ReactNode } from "react";
 import { Product } from "../interfaces/product";
+import { useUser } from "./UserContext";
 
 interface CartItem extends Product {
 	quantity: number;
@@ -22,11 +23,25 @@ interface CartProviderProps {
 }
 
 export const CartProvider = ({ children }: CartProviderProps) => {
-	const [cartItems, setCartItems] = useState<CartItem[]>(
-		localStorage.getItem("cartItems")
-			? JSON.parse(localStorage.getItem("cartItems") as string)
-			: []
-	);
+	const { id } = useUser();
+	const [cartItems, setCartItems] = useState<CartItem[]>([]);
+
+	useEffect(() => {
+		if (id) {
+			const storedCart = localStorage.getItem(`cartItems_${id}`);
+			if (storedCart) {
+				setCartItems(JSON.parse(storedCart));
+			} else {
+				setCartItems([]);
+			}
+		}
+	}, [id]);
+
+	useEffect(() => {
+		if (id) {
+			localStorage.setItem(`cartItems_${id}`, JSON.stringify(cartItems));
+		}
+	}, [cartItems, id]);
 
 	const addToCart = (item: CartItem) => {
 		const isItemInCart = cartItems.find(

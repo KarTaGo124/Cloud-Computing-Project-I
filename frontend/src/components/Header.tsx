@@ -10,7 +10,6 @@ export const Header: React.FC = () => {
 	const { id, setUser } = useUser();
 	const cardContext = useContext(CartContext);
 	const cartItems = cardContext?.cartItems || [];
-	const clearCart = cardContext?.clearCart || (() => {});
 	const cartItemCount = cartItems.reduce(
 		(total: number, item: CartItem) => total + item.quantity,
 		0
@@ -19,7 +18,6 @@ export const Header: React.FC = () => {
 	const handleLogout = () => {
 		setUser({ id: 0, email: "" });
 		localStorage.removeItem("user");
-		clearCart();
 		navigate("/login");
 	};
 
