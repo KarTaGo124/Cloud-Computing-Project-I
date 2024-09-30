@@ -39,6 +39,7 @@ export interface FavoriteProduct {
 	name: string;
 	description: string;
 	price: number;
+	imageUrl: string;
 	category: CategoryReceipt;
 }
 

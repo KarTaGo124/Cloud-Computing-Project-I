@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { getProductById } from "../services/product";
-import { Header } from "./Header";
+import { Header } from "../components/Header";
 import { Product } from "../interfaces/product";
 
 export default function ProductPage() {
