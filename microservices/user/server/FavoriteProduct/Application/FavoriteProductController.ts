@@ -10,7 +10,7 @@ import FavoriteProductService from "../Domain/FavoriteProductService";
 
 /**
  * @swagger
- * /favProducts/{userIdid}:
+ * /favProducts/{userId}:
  *  get:
  *   summary: Get favorite products by User ID
  *  tags: [FavoriteProduct]
