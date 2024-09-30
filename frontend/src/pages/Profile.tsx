@@ -90,11 +90,11 @@ export default function Profile() {
 									<span className="font-medium">
 										Date of Birth:
 									</span>{" "}
-									{
-										new Date(profile.date_of_birth)
-											.toISOString()
-											.split("T")[0]
-									}
+									{profile.date_of_birth
+										? new Date(profile.date_of_birth)
+												.toISOString()
+												.split("T")[0]
+										: ""}
 								</p>
 								<p>
 									<span className="font-medium">
