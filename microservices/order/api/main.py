@@ -9,7 +9,8 @@ from datetime import datetime
 from sqlalchemy import func
 
 app = FastAPI()
-origins = ["http://localhost:5173"]
+origins = ["http://localhost:5173",
+           "http://localhost:3000"]
 
 app.add_middleware(
     CORSMiddleware,
