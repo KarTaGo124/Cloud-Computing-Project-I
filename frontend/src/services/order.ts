@@ -1,7 +1,25 @@
 import axios from "axios";
-import { Order, OrderProduct } from "../interfaces/order";
+import { CartItem, Order, OrderItem, OrderProduct } from "../interfaces/order";
 
 const baseUrl = "http://localhost:8000";
+
+export const postOrder = async (customer_id: number, products: CartItem[]) => {
+  try {
+    const order: OrderItem = {
+      customer_id: customer_id,
+      products: products.map((product) => ({
+        product_id: product.id,
+        quantity: product.quantity,
+      })),
+      order_date: new Date(),
+    };
+    const res = await axios.post(`${baseUrl}/orders`, order);
+    return res.data;
+  } catch (error) {
+    console.error("Error creating order:", error);
+    throw error;
+  }
+};
 
 export const deleteOrder = async (order_id: number) => {
   try {

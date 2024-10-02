@@ -15,3 +15,9 @@ export interface Order {
 export interface CartItem extends Product {
   quantity: number;
 }
+
+export interface OrderItem {
+  customer_id: number;
+  products: OrderProduct[];
+  order_date: Date;
+}

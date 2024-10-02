@@ -1,4 +1,4 @@
-import { useContext, useMemo } from "react";
+import { useContext, useMemo, useState } from "react";
 import {
   Button,
   Card,
@@ -12,17 +12,20 @@ import {
 import { Trash2 } from "lucide-react";
 import { CartContext } from "../contexts/CartContext";
 import { Header } from "../components/Header";
+import { postOrder } from "../services/order";
+import { useUser } from "../contexts/UserContext";
 
 export default function Cart() {
   const cartContext = useContext(CartContext);
   const cartItems = cartContext?.cartItems || [];
-
+  const { id } = useUser();
   const total = useMemo(() => {
     return cartContext?.getCartTotal() || 0;
   }, [cartContext]);
 
-  const placeOrder = () => {
+  const placeOrder = async () => {
     console.log("Placing order:", cartItems);
+    postOrder(id, cartItems);
     alert("Order placed successfully!");
     cartContext?.clearCart();
   };
