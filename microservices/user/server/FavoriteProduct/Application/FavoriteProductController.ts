@@ -11,24 +11,23 @@ import FavoriteProductService from "../Domain/FavoriteProductService";
 /**
  * @swagger
  * /favProducts/{userId}:
- *  get:
- *   summary: Get favorite products by User ID
- *  tags: [FavoriteProduct]
- * parameters:
- *  - in: path
- *   name: userId
- *  required: true
- * schema:
- * type: string
- * description: User ID
- * responses:
- * 200:
- * description: Favorite products found
- * 404:
- * description: Favorite products not found
- * 500:
- * description: Error getting favorite products
- *
+ *   get:
+ *     summary: Get favorite products by User ID
+ *     tags: [FavoriteProduct]
+ *     parameters:
+ *       - in: path
+ *         name: userId
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: User ID
+ *     responses:
+ *       200:
+ *         description: Favorite products found
+ *       404:
+ *         description: Favorite products not found
+ *       500:
+ *         description: Error getting favorite products
  */
 const getFavoriteProductsByUserId = async (req: Request, res: Response) => {
 	try {
