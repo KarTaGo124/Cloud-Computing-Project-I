@@ -12,4 +12,6 @@ const pool = mysql.createPool({
 
 console.log('DB connected');
 
+pool.query("USE userdb; SHOW TABLES;").then(console.log).catch(console.error);
+
 export default pool;
