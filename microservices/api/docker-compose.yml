@@ -1,0 +1,60 @@
+version: "3.9"
+services:
+  # Product Service
+  product-backend:
+    image: kartago124/product-backend
+    container_name: product-backend
+    ports:
+      - "8080:8080"
+    environment:
+      SPRING_DATA_MONGODB_URI: mongodb://44.220.236.227:27017/database # Se cambia "mongo" por la IP de la máquina remota
+    networks:
+      - backend-network
+
+  # Order Service
+  api-order:
+    image: kartago124/order-backend
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@44.220.236.227:5432/order # Se cambia "db" por la IP de la máquina remota
+    networks:
+      - backend-network
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # User Service
+  user-backend:
+    build: ./user
+    container_name: user-backend
+    env_file:
+      - ./user/.env
+    depends_on:
+      - mysql-db
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./user:/app
+      - /app/node_modules
+    networks:
+      - backend-network
+
+  # Orchestrator Service
+  orchestrator:
+    build: ./orchestrator # Asume que el orquestador está en el directorio ./orchestrator
+    container_name: orchestrator
+    ports:
+      - "3000:3000" # Puerto para el orquestador
+    networks:
+      - backend-network
+    depends_on:
+      - api-order
+      - product-backend
+      - user-backend
+
+networks:
+  backend-network:
+    driver: bridge
