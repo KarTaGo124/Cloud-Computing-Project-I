@@ -8,7 +8,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar las dependencias
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Instalar nodemon y typescript globalmente
 RUN npm install -g nodemon typescript
