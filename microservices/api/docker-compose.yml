@@ -28,8 +28,8 @@ services:
   user-backend:
     build: ./user
     container_name: user-backend
-    env_file:
-      - ./user/.env
+    # env_file:
+    #   - ./user/.env
     ports:
       - "8081:8081"
     volumes:
