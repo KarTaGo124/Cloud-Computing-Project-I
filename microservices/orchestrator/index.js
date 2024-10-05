@@ -184,6 +184,20 @@ app.get("/orchestrator/users/:userId/favorites", async (req, res) => {
   }
 });
 
+/**
+ * @swagger
+ * /health:
+ *   get:
+ *     summary: Check service health
+ *     description: Returns the status of the orchestrator service.
+ *     responses:
+ *       200:
+ *         description: Service is up and running
+ */
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "healthy" });
+});
+
 app.listen(port, () => {
   console.log(`Orchestrator running on http://localhost:${port}`);
 });
