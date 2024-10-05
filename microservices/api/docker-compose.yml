@@ -1,9 +1,7 @@
-version: "3.9"
 services:
   # Product Service
   product-backend:
     image: kartago124/product-backend
-    container_name: product-backend
     ports:
       - "8080:8080"
     environment:
@@ -32,8 +30,6 @@ services:
     container_name: user-backend
     env_file:
       - ./user/.env
-    depends_on:
-      - mysql-db
     ports:
       - "8081:8081"
     volumes:
