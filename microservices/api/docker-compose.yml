@@ -28,7 +28,7 @@ services:
 
   # User Service
   user-backend:
-    build: ./user
+    build: ../user
     container_name: user-backend
     env_file:
       - ../user/.env
