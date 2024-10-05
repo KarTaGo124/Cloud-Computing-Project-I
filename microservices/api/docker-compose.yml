@@ -40,7 +40,7 @@ services:
 
   # Orchestrator Service
   orchestrator:
-    build: ./orchestrator # Asume que el orquestador está en el directorio ./orchestrator
+    build: ../orchestrator # Asume que el orquestador está en el directorio ./orchestrator
     container_name: orchestrator
     ports:
       - "3000:3000" # Puerto para el orquestador
