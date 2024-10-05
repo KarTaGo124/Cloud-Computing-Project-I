@@ -17,7 +17,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@44.220.236.227:5432/order # Se cambia "db" por la IP de la máquina remota
+      DATABASE_URL: postgresql://postgres:postgres@44.220.236.227:5432/order
     networks:
       - backend-network
     healthcheck:

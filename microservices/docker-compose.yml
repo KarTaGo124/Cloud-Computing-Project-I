@@ -36,7 +36,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: db
+      POSTGRES_DB: order
     networks:
       - backend-network
     healthcheck:
