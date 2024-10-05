@@ -13,8 +13,8 @@ dotenv.config();
 const app = express();
 
 const corsOptions = {
-	origin: "http://localhost:5173",
-	methods: "GET,PUT,PATCH,POST,DELETE",
+  origin: "*",
+  methods: "GET,PUT,PATCH,POST,DELETE",
 };
 
 app.use(cors(corsOptions));
@@ -28,5 +28,5 @@ app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
-	console.log(`Servidor corriendo en http://localhost:${PORT}`);
+  console.log(`Servidor corriendo en http://localhost:${PORT}`);
 });
