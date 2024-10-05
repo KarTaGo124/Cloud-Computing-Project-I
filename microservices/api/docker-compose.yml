@@ -2,6 +2,7 @@ services:
   # Product Service
   product-backend:
     image: kartago124/product-backend
+    container_name: product-backend
     ports:
       - "8080:8080"
     environment:
@@ -12,6 +13,7 @@ services:
   # Order Service
   api-order:
     image: kartago124/order-backend
+    container_name: api-order
     ports:
       - "8000:8000"
     environment:
