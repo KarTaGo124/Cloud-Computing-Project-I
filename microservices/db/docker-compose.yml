@@ -2,7 +2,7 @@ version: "3.9"
 services:
   mongo:
     image: mongo:latest
-    container_name: mongo-db
+    container_name: product
     ports:
       - "27017:27017"
     volumes:
@@ -10,7 +10,7 @@ services:
 
   postgres:
     image: postgres:15-alpine
-    container_name: postgres-db
+    container_name: order
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
@@ -27,7 +27,7 @@ services:
 
   mysql:
     image: mysql:8.0
-    container_name: mysql-db
+    container_name: user
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
       MYSQL_DATABASE: userdb
