@@ -24,19 +24,19 @@ services:
       timeout: 5s
       retries: 5
 
-  # User Service
-  user-backend:
-    build: ./user
-    container_name: user-backend
-    # env_file:
-    #   - ./user/.env
-    ports:
-      - "8081:8081"
-    volumes:
-      - ./user:/app
-      - /app/node_modules
-    networks:
-      - backend-network
+  # # User Service
+  # user-backend:
+  #   build: ./user
+  #   container_name: user-backend
+  #   # env_file:
+  #   #   - ./user/.env
+  #   ports:
+  #     - "8081:8081"
+  #   volumes:
+  #     - ./user:/app
+  #     - /app/node_modules
+  #   networks:
+  #     - backend-network
 
   # Orchestrator Service
   orchestrator:
