@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Product } from "../interfaces/product";
 
-const baseUrl = "http://product-backend:3000";
+const baseUrl =
+  "lb-prod-93134609.us-east-1.elb.amazonaws.com:8080/product-backend";
 
 export const getProducts = async (): Promise<Product[]> => {
   try {

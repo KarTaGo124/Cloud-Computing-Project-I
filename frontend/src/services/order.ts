@@ -1,7 +1,7 @@
 import axios from "axios";
 import { CartItem, Order, OrderItem, OrderProduct } from "../interfaces/order";
 
-const baseUrl = "http://api-order:3000";
+const baseUrl = "lb-prod-93134609.us-east-1.elb.amazonaws.com:8000/api-order";
 
 export const postOrder = async (customer_id: number, products: CartItem[]) => {
   try {

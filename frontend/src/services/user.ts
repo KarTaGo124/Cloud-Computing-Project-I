@@ -1,7 +1,8 @@
 import axios from "axios";
 import { User, UserProfile, UserProfileUpdateDto } from "../interfaces/user";
 
-const baseUrl = "http://user-backend:3000";
+const baseUrl =
+  "lb-prod-93134609.us-east-1.elb.amazonaws.com:8081/user-backend";
 
 export const login = async (email: string, password: string) => {
   try {

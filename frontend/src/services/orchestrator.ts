@@ -1,7 +1,8 @@
 import axios from "axios";
 import { OrderReceipt, UserFavoriteProducts } from "../interfaces/orchestrator"; // Importamos las interfaces
 
-const baseUrl = "http://orchestrator:3000"; // Cambiamos la URL base
+const baseUrl =
+  "lb-prod-93134609.us-east-1.elb.amazonaws.com:3000/orchestrator"; // Cambiamos la URL base
 
 export const getOrderReceipt = async (
   orderId: string
