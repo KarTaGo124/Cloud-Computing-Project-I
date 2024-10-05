@@ -12,7 +12,7 @@ services:
 
   # Order Service
   api-order:
-    image: flts123/order-backend
+    image: flts123/order
     container_name: api-order
     ports:
       - "8000:8000"
