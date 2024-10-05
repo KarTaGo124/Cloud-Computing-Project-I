@@ -36,7 +36,7 @@ services:
       - "8005:3306"
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./CloudDB-User.sql:/docker-entrypoint-initdb.d/CloudDB-User.sql
+      - ../user/CloudDB-User.sql:/docker-entrypoint-initdb.d/CloudDB-User.sql
 
 volumes:
   mongo-data:
