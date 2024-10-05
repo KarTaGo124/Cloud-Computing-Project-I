@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 services:
   # MongoDB for Product Service
   mongo:
@@ -36,7 +36,7 @@ services:
     environment:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
-      POSTGRES_DB: order
+      POSTGRES_DB: db
     networks:
       - backend-network
     healthcheck:
@@ -96,12 +96,12 @@ services:
     networks:
       - backend-network
 
-   # Orchestrator Service
+    # Orchestrator Service
   orchestrator:
-    build: ./orchestrator  # Asume que el orquestador está en el directorio ./orchestrator
+    build: ./orchestrator # Asume que el orquestador está en el directorio ./orchestrator
     container_name: orchestrator
     ports:
-      - "3000:3000"  # Puerto para el orquestador
+      - "3000:3000" # Puerto para el orquestador
     networks:
       - backend-network
     depends_on:
