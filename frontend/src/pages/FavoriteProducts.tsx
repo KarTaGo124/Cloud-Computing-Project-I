@@ -20,7 +20,7 @@ export default function FavoriteProducts() {
 		async function fetchFavorites() {
 			try {
 				const data: UserFavoriteProducts =
-					await getUserFavoriteProducts(id.toString());
+					await getUserFavoriteProducts(id);
 				setFavoriteProducts(data.favoriteProducts);
 			} catch (error) {
 				console.error("Error fetching favorite products:", error);
