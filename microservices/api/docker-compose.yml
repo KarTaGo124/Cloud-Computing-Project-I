@@ -35,7 +35,7 @@ services:
       - ../user/.env
     environment:
       MYSQL_HOST: 23.21.93.220 #mv base de datos ip
-      MYSQL_PORT: 3307
+      MYSQL_PORT: 3306
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
       MYSQL_DATABASE: userdb
