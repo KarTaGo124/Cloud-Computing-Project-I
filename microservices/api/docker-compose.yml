@@ -7,7 +7,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://23.21.93.220:27017/database # ip base de datos
+      SPRING_DATA_MONGODB_URI: mongodb://172.31.94.101:27017/database # ip base de datos
     networks:
       - backend-network
 
@@ -18,7 +18,7 @@ services:
     ports:
       - "8000:8000"
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@23.21.93.220:5432/order
+      DATABASE_URL: postgresql://postgres:postgres@172.31.94.101:5432/order
     networks:
       - backend-network
     healthcheck:
@@ -34,7 +34,7 @@ services:
     env_file:
       - ../user/.env
     environment:
-      MYSQL_HOST: 23.21.93.220 #mv base de datos ip
+      MYSQL_HOST: 172.31.94.101 #mv base de datos ip
       MYSQL_PORT: 3306
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
