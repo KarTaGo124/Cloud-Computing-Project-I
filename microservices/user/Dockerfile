@@ -1,26 +1,19 @@
-# Usa una imagen base de Node
-FROM node:18-alpine
+FROM node:14
 
-# Establecer el directorio de trabajo
+# Set the working directory
 WORKDIR /app
 
-# Copiar el archivo de package.json y package-lock.json
+# Copy package.json and package-lock.json
 COPY package*.json ./
 
-# Instalar las dependencias
-RUN npm install --legacy-peer-deps
+# Install dependencies
+RUN npm install
 
-# Instalar ts-node y nodemon globalmente (no necesitas instalar TypeScript globalmente)
-RUN npm install -g ts-node nodemon
-
-# Copiar el resto de la aplicación
+# Copy the rest of the application code
 COPY . .
 
-# Compilar el proyecto TypeScript (opcional, solo si estás usando un comando build)
-RUN npm run build
-
-# Exponer el puerto en el que se ejecutará la aplicación
+# Expose the application port
 EXPOSE 8081
 
-# Comando para iniciar la aplicación
-CMD ["npm", "run", "start"]
+# Command to run the application
+CMD ["npm", "start"]
