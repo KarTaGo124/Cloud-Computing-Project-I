@@ -15,13 +15,14 @@ export default function HomePage() {
 		const cartItem = { ...product, quantity: 0 };
 		cartContext?.addToCart(cartItem);
 	};
+
 	const { id } = useUser();
 	const [favoriteProducts, setFavoriteProducts] = useState<string[]>([]);
 
 	useEffect(() => {
 		async function fetchFavorites() {
 			try {
-				const favorites = await getUserFavoriteProducts(id.toString());
+				const favorites = await getUserFavoriteProducts(id);
 				const favoriteIds = favorites.favoriteProducts.map(
 					(p) => p.product_id
 				);
