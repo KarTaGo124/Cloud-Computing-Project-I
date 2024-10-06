@@ -1,4 +1,11 @@
-import { ShoppingCart, User, LogOut, Package, Heart } from "lucide-react";
+import {
+	ShoppingCart,
+	User,
+	LogOut,
+	Package,
+	Heart,
+	Crown,
+} from "lucide-react";
 import { useNavigate } from "react-router";
 import { useEffect, useState } from "react";
 import { useUser } from "../contexts/UserContext";
@@ -75,7 +82,7 @@ export const Header: React.FC = () => {
 									onClick={toggleModal}
 									className="p-2 rounded-full bg-blue-500 text-white hover:bg-blue-600 transition-colors"
 								>
-									User of the Month
+									<Crown className="h-6 w-6" />
 								</button>
 								<button
 									onClick={() => navigate("/cart")}
