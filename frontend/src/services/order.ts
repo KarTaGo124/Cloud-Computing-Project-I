@@ -1,7 +1,8 @@
 import axios from "axios";
 import { CartItem, Order, OrderItem, OrderProduct } from "../interfaces/order";
 
-const baseUrl = "http://54.242.26.176:8000";
+const baseUrl =
+	"http://lb-cloud-proyecto-303940397.us-east-1.elb.amazonaws.com:8000";
 
 export const postOrder = async (customer_id: number, products: CartItem[]) => {
 	try {
