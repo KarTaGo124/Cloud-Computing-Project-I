@@ -137,7 +137,7 @@ async def get_orders_by_date(date: str, db: db_dependency):
         raise HTTPException(status_code=404, detail="No orders found for this date")
     return result
 
-@app.get("/orders/monthly-user", tags=["Customers"])
+@app.get("/orders/monthly/user", tags=["Customers"])
 async def get_customer_with_most_orders(db: db_dependency):
     result = db.query(
         models.Order.customer_id,
@@ -147,10 +147,8 @@ async def get_customer_with_most_orders(db: db_dependency):
     ).order_by(
         func.count(models.Order.id).desc()
     ).first()
-
     if not result:
         raise HTTPException(status_code=404, detail="No orders found")
-
     return {
         "customer_id": result.customer_id,
         "total_orders": result.order_count
