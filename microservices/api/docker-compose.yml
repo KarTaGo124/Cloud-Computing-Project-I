@@ -6,7 +6,7 @@ services:
     ports:
       - "8080:8080"
     environment:
-      SPRING_DATA_MONGODB_URI: mongodb://44.220.236.227:27017/database # Se cambia "mongo" por la IP de la máquina remota
+      SPRING_DATA_MONGODB_URI: mongodb://44.220.236.227:27017/database # ip base de datos
     networks:
       - backend-network
 
@@ -33,7 +33,7 @@ services:
     env_file:
       - ../user/.env
     environment:
-      MYSQL_HOST: 44.220.236.227
+      MYSQL_HOST: 44.220.236.227 #mv base de datos ip
       MYSQL_PORT: 8005
       MYSQL_USER: user
       MYSQL_PASSWORD: userpassword
