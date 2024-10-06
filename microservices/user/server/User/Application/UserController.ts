@@ -68,7 +68,9 @@ const register = async (req: Request, res: Response) => {
 
   try {
     const newUser = await userService.createUser(username, email, password);
+    console.log("newUser", newUser);
     await UserProfileService.createUserProfile(newUser.id);
+    console.log("newUserProfile", newUser.id);
     res.status(201).json(newUser);
   } catch (error) {
     res.status(500).json({ error: "Error creating user" });
