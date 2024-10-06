@@ -9,6 +9,7 @@ COPY package*.json ./
 # Install all dependencies (including devDependencies)
 RUN npm install 
 RUN npm i typescript -g
+RUN npm link typescript
 
 # Copy the rest of the application code
 COPY . .
