@@ -42,7 +42,7 @@ services:
       - "8081:8081"
     volumes:
       - ../user:/app
-      - /home/ubuntu/Cloud-Computing-Project-I/microservices/user/node_modules:/app/node_modules
+      # - /home/ubuntu/Cloud-Computing-Project-I/microservices/user/node_modules:/app/node_modules
     networks:
       - backend-network
 
