@@ -44,7 +44,7 @@ export const Header: React.FC = () => {
 		};
 
 		fetchMonthlyUser();
-	}, []);
+	}, [showModal]);
 
 	const closeModal = () => setShowModal(false);
 
