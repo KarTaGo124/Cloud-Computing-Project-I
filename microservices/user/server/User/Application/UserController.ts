@@ -41,7 +41,7 @@ const getUserWithId = async (req: Request, res: Response) => {
 
 /**
  * @swagger
- * /users/regiser:
+ * /users/register:
  *   post:
  *     summary: Register a new user
  *     tags: [User]
