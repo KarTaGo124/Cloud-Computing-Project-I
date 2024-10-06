@@ -1,7 +1,7 @@
 import axios from "axios";
 import { Product } from "../interfaces/product";
 
-const baseUrl = "http://localhost:8080/products";
+const baseUrl = "http://54.242.26.176:8080/products";
 
 export const getProducts = async (): Promise<Product[]> => {
 	try {

@@ -1,7 +1,7 @@
 import axios from "axios";
 import { User, UserProfile, UserProfileUpdateDto } from "../interfaces/user";
 
-const baseUrl = "http://localhost:8081";
+const baseUrl = "http://54.242.26.176:8081";
 
 export const login = async (email: string, password: string) => {
 	try {
