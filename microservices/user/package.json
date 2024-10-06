@@ -23,7 +23,8 @@
     "sequelize": "^6.37.3",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.1",
-    "user": "file:"
+    "user": "file:",
+    "typescript": "^4.5.5"
   },
   "devDependencies": {
     "@types/cors": "^2.8.17",
