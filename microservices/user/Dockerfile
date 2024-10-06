@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8081
 
 # Command to run the application
-CMD ["ts-node", "index.ts"]
+CMD ["ts-node", "user/server/index.ts"]
