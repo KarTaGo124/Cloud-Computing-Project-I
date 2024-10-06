@@ -1,7 +1,8 @@
 services:
   # Product Service
   product-backend:
-    build: ../product/backend
+    image: kartago124/product-backend
+    # build: ../product/backend
     container_name: product-backend
     ports:
       - "8080:8080"
