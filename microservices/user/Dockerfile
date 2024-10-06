@@ -16,3 +16,6 @@ EXPOSE 8081
 
 # Command to run the application
 CMD ["npm", "start"]
+
+#first run on user directory rm -rf node_modules package-lock.json && npm install && npm start
+#then run docker compose
