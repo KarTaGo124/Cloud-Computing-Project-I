@@ -7,10 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies (including devDependencies)
-RUN npm install 
-RUN npm i typescript -g
-RUN npm link typescript
-
+RUN npm ci --legacy-peer-deps
 # Copy the rest of the application code
 COPY . .
 
