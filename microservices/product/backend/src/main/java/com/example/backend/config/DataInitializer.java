@@ -16,7 +16,7 @@ public class DataInitializer {
 
     @Bean
     CommandLineRunner initData(CategoryRepository categoryRepository, ProductRepository productRepository) {
-        String baseUrl = "http://lb-parcial-1639907826.us-east-1.elb.amazonaws.com:8080";
+        String baseUrl = "http://localhost:8080";
         return args -> {
             Category electronics = new Category();
             electronics.setId(new ObjectId("66ecb5cd128f2fef1c964034"));
@@ -61,7 +61,7 @@ public class DataInitializer {
             smartphone.setDescription("A powerful smartphone");
             smartphone.setPrice(699.99);
             smartphone.setStock(100L);
-            smartphone.setImageUrl( baseUrl + "/images/smartphone.jpg");
+            smartphone.setImageUrl(baseUrl + "/images/smartphone.jpg");
             smartphone.setCategoryId(electronics.getId());
 
             Product laptop = new Product();

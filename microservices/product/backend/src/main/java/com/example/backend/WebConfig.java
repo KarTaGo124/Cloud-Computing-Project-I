@@ -9,7 +9,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**") // Allow CORS on all endpoints
-                .allowedOrigins("http://cloud-parcial.s3-website-us-east-1.amazonaws.com") // Your frontend domain
+                .allowedOrigins("*") // Your frontend domain
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS") // HTTP methods
                 .allowedHeaders("*") // Allow any headers
                 .allowCredentials(true); // Allow cookies or authentication

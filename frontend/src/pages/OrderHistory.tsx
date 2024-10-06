@@ -57,7 +57,7 @@ export default function OrderHistory() {
 		setSelectedOrder(order);
 		try {
 			// Llamamos a getOrderReceipt para obtener la información completa de la orden
-			const receipt = await getOrderReceipt(order.id.toString());
+			const receipt = await getOrderReceipt(order.id);
 			setOrderReceipt(receipt); // Guardamos el recibo en el estado
 			setModalIsOpen(true);
 		} catch (error) {
