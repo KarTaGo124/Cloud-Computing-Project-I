@@ -22,7 +22,7 @@ export const register = async (
   password: string
 ) => {
   try {
-    const response = await axios.post(`${baseUrl}/users/regiser`, {
+    const response = await axios.post(`${baseUrl}/users/register`, {
       username,
       email,
       password,
