@@ -1,7 +1,8 @@
 import axios from "axios";
 import { Product } from "../interfaces/product";
 
-const baseUrl = "http://lb-parcial-1639907826.us-east-1.elb.amazonaws.com:8080";
+const baseUrl =
+  "http://lb-parcial-1639907826.us-east-1.elb.amazonaws.com:8080/products";
 
 export const getProducts = async (): Promise<Product[]> => {
   try {
