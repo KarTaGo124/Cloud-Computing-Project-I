@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install all dependencies (including devDependencies)
-RUN npm ci --legacy-peer-deps
+RUN npm install
 # Copy the rest of the application code
 COPY . .
 
@@ -15,4 +15,4 @@ COPY . .
 EXPOSE 8081
 
 # Command to run the application
-CMD ["npx", "ts-node", "server/index.ts"]
+CMD ["ts-node", "server/index.ts"]
