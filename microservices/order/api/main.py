@@ -155,11 +155,12 @@ async def get_customer_with_most_orders(db: db_dependency):
         raise HTTPException(status_code=404, detail="No orders found")
     
     try:
-        response = requests.get(f"http://user-backend:8081/users/{result.data.customer_id}")
+        response = requests.get(f"http://user-backend:8081/users/{result.customer_id}")
+        response.raise_for_status()  # This will raise an HTTPError for bad responses
         user_info = response.json()
         return {
-            "username": user_info.username,
+            "username": user_info['username'],
             "orders": result.order_count,
         }
-    except ValueError:
-            raise HTTPException(status_code=500, detail="Error fetching user info")
+    except requests.RequestException as e:
+        raise HTTPException(status_code=500, detail=f"Error fetching user info: {str(e)}")
