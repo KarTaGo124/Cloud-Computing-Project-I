@@ -42,6 +42,7 @@ export const Header: React.FC = () => {
         console.error("Error fetching monthly user:", error);
       }
     };
+
     fetchMonthlyUser();
   }, [showModal]);
 
