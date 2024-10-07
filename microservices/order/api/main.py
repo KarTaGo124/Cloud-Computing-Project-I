@@ -7,7 +7,7 @@ from database import engine, SessionLocal
 from sqlalchemy.orm import Session
 from datetime import datetime
 from sqlalchemy import func
-import httpx
+import requests
 
 
 app = FastAPI()
@@ -43,12 +43,7 @@ def get_db():
         db.close()
 
 db_dependency = Annotated[Session, Depends(get_db)]
-
-async def get_user_info(user_id: int):
-    async with httpx.AsyncClient() as client:
-        response = await client.get(f"http://user-backend:8081/users/{user_id}")
-        response.raise_for_status()
-        return response.json()
+    
 
 @app.post("/orders/", tags=["Orders"])
 async def create_order(order: OrderBase, db: db_dependency):
@@ -160,16 +155,11 @@ async def get_customer_with_most_orders(db: db_dependency):
         raise HTTPException(status_code=404, detail="No orders found")
     
     try:
-        user_info = await get_user_info(result.customer_id)
+        response = requests.get(f"http://user-backend:8081/users/{result.data.customer_id}")
+        user_info = response.json()
         return {
             "username": user_info.username,
             "orders": result.order_count,
         }
-    except httpx.HTTPStatusError as e:
-        if e.response.status_code == 404:
-            return {
-                "username": "not_found",
-                "total_orders": result.order_count,
-            }
-        else:
+    except ValueError:
             raise HTTPException(status_code=500, detail="Error fetching user info")
